@@ -3,9 +3,9 @@ package com.tongji.software_management.entity.DBEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "experiment", schema = "education", catalog = "")
+@Table(name = "experiment", schema = "education")
 @IdClass(ExperimentEntityPK.class)
-public class ExperimentEntity {
+public class Experiment {
     private String courseId;
     private String expname;
     private String classId;
@@ -78,7 +78,7 @@ public class ExperimentEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ExperimentEntity that = (ExperimentEntity) o;
+        Experiment that = (Experiment) o;
 
         if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
         if (expname != null ? !expname.equals(that.expname) : that.expname != null) return false;

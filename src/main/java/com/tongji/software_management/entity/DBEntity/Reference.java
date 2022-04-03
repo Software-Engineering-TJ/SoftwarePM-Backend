@@ -3,8 +3,8 @@ package com.tongji.software_management.entity.DBEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "reference", schema = "education", catalog = "")
-public class ReferenceEntity {
+@Table(name = "reference", schema = "education")
+public class Reference {
     private int id;
     private String courseId;
     private String classId;
@@ -66,7 +66,7 @@ public class ReferenceEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ReferenceEntity that = (ReferenceEntity) o;
+        Reference that = (Reference) o;
 
         if (id != that.id) return false;
         if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;

@@ -3,8 +3,8 @@ package com.tongji.software_management.entity.DBEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "choicequestion", schema = "education", catalog = "")
-public class ChoicequestionEntity {
+@Table(name = "choicequestion", schema = "education")
+public class ChoiceQuestion {
     private int choiceId;
     private String choiceQuestion;
     private String choiceOption;
@@ -88,7 +88,7 @@ public class ChoicequestionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ChoicequestionEntity that = (ChoicequestionEntity) o;
+        ChoiceQuestion that = (ChoiceQuestion) o;
 
         if (choiceId != that.choiceId) return false;
         if (choiceDifficulty != that.choiceDifficulty) return false;

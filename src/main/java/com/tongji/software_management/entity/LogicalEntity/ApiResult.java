@@ -4,7 +4,7 @@ package com.tongji.software_management.entity.LogicalEntity;
 * @Author: 🦌🦌🦌
 * @Description: 返回前端的对象
 * @Param: 无
-* @return: 无
+* @Return: 无
 * @Date: 2022/3/22
 */
 public class ApiResult {

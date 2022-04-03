@@ -7,7 +7,7 @@ import com.tongji.software_management.entity.LogicalEntity.ApiResult;
 * @Author: 🦌🦌🦌
 * @Description: 前端返回值生成器
 * @Param: 传递给前端的参数
-* @return: 返回给前端的结果
+* @Return: 返回给前端的结果
 * @Date: 2022/3/22
 */
 public class ApiResultHandler {

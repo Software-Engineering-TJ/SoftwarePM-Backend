@@ -4,9 +4,9 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "practice", schema = "education", catalog = "")
+@Table(name = "practice", schema = "education")
 @IdClass(PracticeEntityPK.class)
-public class PracticeEntity {
+public class Practice {
     private String courseId;
     private String classId;
     private String practiceName;
@@ -68,7 +68,7 @@ public class PracticeEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PracticeEntity that = (PracticeEntity) o;
+        Practice that = (Practice) o;
 
         if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
         if (classId != null ? !classId.equals(that.classId) : that.classId != null) return false;

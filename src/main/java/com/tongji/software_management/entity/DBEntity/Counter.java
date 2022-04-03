@@ -3,8 +3,8 @@ package com.tongji.software_management.entity.DBEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "counter", schema = "education", catalog = "")
-public class CounterEntity {
+@Table(name = "counter", schema = "education")
+public class Counter {
     private int courseId;
     private int classId;
     private int id;
@@ -44,7 +44,7 @@ public class CounterEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CounterEntity that = (CounterEntity) o;
+        Counter that = (Counter) o;
 
         if (courseId != that.courseId) return false;
         if (classId != that.classId) return false;

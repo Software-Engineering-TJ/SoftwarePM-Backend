@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "attend", schema = "education")
 @IdClass(AttendEntityPK.class)
-public class AttendEntity {
+public class Attend {
     private String courseId;
     private String classId;
     private String title;
@@ -63,11 +63,11 @@ public class AttendEntity {
     }
 
     @Override
-    public boolean equals(Object o) {   
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AttendEntity that = (AttendEntity) o;
+        Attend that = (Attend) o;
 
         if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
         if (classId != null ? !classId.equals(that.classId) : that.classId != null) return false;

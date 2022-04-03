@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-public class CourseexpEntityPK implements Serializable {
+public class CourseExpEntityPK implements Serializable {
     private String courseId;
     private String expname;
 
@@ -33,7 +33,7 @@ public class CourseexpEntityPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CourseexpEntityPK that = (CourseexpEntityPK) o;
+        CourseExpEntityPK that = (CourseExpEntityPK) o;
 
         if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
         if (expname != null ? !expname.equals(that.expname) : that.expname != null) return false;
