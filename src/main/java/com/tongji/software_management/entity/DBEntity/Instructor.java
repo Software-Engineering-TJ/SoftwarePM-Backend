@@ -1,10 +1,18 @@
 package com.tongji.software_management.entity.DBEntity;
 
+import com.tongji.software_management.entity.LogicalEntity.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "instructor", schema = "education")
-public class Instructor {
+public class Instructor extends User {
     private String instructorNumber;
     private String email;
     private String password;
@@ -12,6 +20,7 @@ public class Instructor {
     private int sex;
     private String phoneNumber;
     private int status;
+
 
     @Id
     @Column(name = "instructorNumber")

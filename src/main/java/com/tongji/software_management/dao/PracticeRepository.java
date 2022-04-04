@@ -5,6 +5,11 @@ import com.tongji.software_management.entity.DBEntity.PracticeEntityPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PracticeRepository extends JpaRepository<Practice, PracticeEntityPK> {
+    List<Practice> findPracticesByCourseIdAndClassId(String courseID, String classID);
+
+
 }

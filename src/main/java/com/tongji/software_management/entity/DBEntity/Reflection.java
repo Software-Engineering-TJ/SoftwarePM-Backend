@@ -1,7 +1,14 @@
 package com.tongji.software_management.entity.DBEntity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "reflection", schema = "education")
 @IdClass(ReflectionEntityPK.class)
@@ -11,6 +18,7 @@ public class Reflection {
     private String studentNumber;
     private String date;
     private String content;
+
 
     @Id
     @Column(name = "courseID")

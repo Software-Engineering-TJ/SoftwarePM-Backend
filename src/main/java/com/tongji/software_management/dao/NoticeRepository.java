@@ -5,6 +5,11 @@ import com.tongji.software_management.entity.DBEntity.NoticeEntityPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface NoticeRepository extends JpaRepository<Notice, NoticeEntityPK> {
+    List<Notice> findNoticesByCourseIdAndClassId(String courseID, String classID);
+    int deleteNoticeByCourseIdAndClassIdAndInstructorNumberAndDate(String courseID, String classID, String instructorNumber, String date);
+
 }

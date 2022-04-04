@@ -1,7 +1,14 @@
 package com.tongji.software_management.entity.DBEntity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "expscore", schema = "education")
 @IdClass(ExpScoreEntityPK.class)

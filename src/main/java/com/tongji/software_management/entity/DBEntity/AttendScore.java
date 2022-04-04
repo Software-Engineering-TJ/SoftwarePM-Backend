@@ -1,8 +1,15 @@
 package com.tongji.software_management.entity.DBEntity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Builder
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "attendscore", schema = "education")
 @IdClass(AttendScoreEntityPK.class)
 public class AttendScore {

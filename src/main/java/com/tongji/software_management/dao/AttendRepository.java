@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface AttendRepository extends JpaRepository<Attend, AttendEntityPK> {
     List<Attend> findAttendsByCourseIdAndClassId(String courseId, String classId);
+    Attend findAttendByCourseIdAndClassIdAndTitle(String courseID, String classID, String title);
+
 }

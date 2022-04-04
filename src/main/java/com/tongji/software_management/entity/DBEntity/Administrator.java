@@ -1,10 +1,12 @@
 package com.tongji.software_management.entity.DBEntity;
 
+import com.tongji.software_management.entity.LogicalEntity.User;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "administrator", schema = "education")
-public class Administrator {
+public class Administrator extends User {
     private String adminNumber;
     private String email;
     private String password;

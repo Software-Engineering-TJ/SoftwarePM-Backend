@@ -1,7 +1,14 @@
 package com.tongji.software_management.entity.DBEntity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "courseexp", schema = "education")
 @IdClass(CourseExpEntityPK.class)
@@ -11,6 +18,7 @@ public class CourseExp {
     private int percent;
     private int priority;
     private int difficulty;
+
 
     @Id
     @Column(name = "courseID")

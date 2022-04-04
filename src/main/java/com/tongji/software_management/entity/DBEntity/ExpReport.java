@@ -1,7 +1,14 @@
 package com.tongji.software_management.entity.DBEntity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "expreport", schema = "education")
 @IdClass(ExpReportEntityPK.class)
@@ -14,6 +21,7 @@ public class ExpReport {
     private String fileType;
     private String startDate;
     private String endDate;
+
 
     @Id
     @Column(name = "courseID")
