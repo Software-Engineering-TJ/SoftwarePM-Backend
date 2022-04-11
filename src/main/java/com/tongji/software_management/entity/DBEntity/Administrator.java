@@ -75,4 +75,5 @@ public class Administrator extends User {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
+
 }

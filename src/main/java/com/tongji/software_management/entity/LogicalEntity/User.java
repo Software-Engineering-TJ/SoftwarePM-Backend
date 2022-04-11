@@ -1,7 +1,7 @@
 package com.tongji.software_management.entity.LogicalEntity;
 
 
-public class User {
+public abstract class User {
     protected String email;
     protected String password;
     protected String name;
@@ -29,5 +29,9 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+//
+    public abstract int getStatus();
+
+    public abstract void setStatus(int status);
 }
 
