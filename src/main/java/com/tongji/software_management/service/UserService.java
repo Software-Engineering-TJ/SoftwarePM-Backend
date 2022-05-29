@@ -98,17 +98,17 @@ public class UserService {
         return result;
     }
 
-    public String getPassword(String identity, String userNumber) {
-        User user = null;
-        if(identity.equals("student")){
-            user = studentRepository.findStudentByStudentNumber(userNumber);
-        }else if(identity.equals("instructor")){
-            user = instructorRepository.findInstructorByInstructorNumber(userNumber);
-        }else{
-            user = administratorRepository.findAdministratorByAdminNumber(userNumber);
-        }
-        return user.getPassword();
-    }
+//    public String getPassword(String identity, String userNumber) {
+//        User user = null;
+//        if(identity.equals("student")){
+//            user = studentRepository.findStudentByStudentNumber(userNumber);
+//        }else if(identity.equals("instructor")){
+//            user = instructorRepository.findInstructorByInstructorNumber(userNumber);
+//        }else{
+//            user = administratorRepository.findAdministratorByAdminNumber(userNumber);
+//        }
+//        return user.getPassword();
+//    }
 
     public int changePassword(String identity, String userNumber, String newPassword) {
         if(identity.equals("student")){

@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "administrator", schema = "education")
-public class Administrator extends User {
+public class Administrator {
     private String adminNumber;
     private String email;
     private String password;
