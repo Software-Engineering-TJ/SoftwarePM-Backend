@@ -5,13 +5,13 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "experiment", schema = "education")
-@IdClass(ExperimentEntityPK.class)
+@IdClass(ExperimentPK.class)
 public class Experiment {
     private String courseId;
     private String expname;
@@ -20,9 +20,8 @@ public class Experiment {
     private String endDate;
     private String expInfo;
 
-
     @Id
-    @Column(name = "courseID")
+    @Column(name = "course_id")
     public String getCourseId() {
         return courseId;
     }
@@ -42,7 +41,7 @@ public class Experiment {
     }
 
     @Id
-    @Column(name = "classID")
+    @Column(name = "class_id")
     public String getClassId() {
         return classId;
     }
@@ -52,7 +51,7 @@ public class Experiment {
     }
 
     @Basic
-    @Column(name = "startDate")
+    @Column(name = "start_date")
     public String getStartDate() {
         return startDate;
     }
@@ -62,7 +61,7 @@ public class Experiment {
     }
 
     @Basic
-    @Column(name = "endDate")
+    @Column(name = "end_date")
     public String getEndDate() {
         return endDate;
     }
@@ -72,7 +71,7 @@ public class Experiment {
     }
 
     @Basic
-    @Column(name = "expInfo")
+    @Column(name = "exp_info")
     public String getExpInfo() {
         return expInfo;
     }
@@ -85,27 +84,12 @@ public class Experiment {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Experiment that = (Experiment) o;
-
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (expname != null ? !expname.equals(that.expname) : that.expname != null) return false;
-        if (classId != null ? !classId.equals(that.classId) : that.classId != null) return false;
-        if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
-        if (endDate != null ? !endDate.equals(that.endDate) : that.endDate != null) return false;
-        if (expInfo != null ? !expInfo.equals(that.expInfo) : that.expInfo != null) return false;
-
-        return true;
+        return Objects.equals(courseId, that.courseId) && Objects.equals(expname, that.expname) && Objects.equals(classId, that.classId) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && Objects.equals(expInfo, that.expInfo);
     }
 
     @Override
     public int hashCode() {
-        int result = courseId != null ? courseId.hashCode() : 0;
-        result = 31 * result + (expname != null ? expname.hashCode() : 0);
-        result = 31 * result + (classId != null ? classId.hashCode() : 0);
-        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
-        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
-        result = 31 * result + (expInfo != null ? expInfo.hashCode() : 0);
-        return result;
+        return Objects.hash(courseId, expname, classId, startDate, endDate, expInfo);
     }
 }

@@ -5,13 +5,14 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "courseexp", schema = "education")
-@IdClass(CourseExpEntityPK.class)
+@Table(name = "course_exp", schema = "education", catalog = "")
+@IdClass(CourseExpPK.class)
 public class CourseExp {
     private String courseId;
     private String expname;
@@ -19,9 +20,8 @@ public class CourseExp {
     private int priority;
     private int difficulty;
 
-
     @Id
-    @Column(name = "courseID")
+    @Column(name = "course_id")
     public String getCourseId() {
         return courseId;
     }
@@ -74,25 +74,12 @@ public class CourseExp {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        CourseExp that = (CourseExp) o;
-
-        if (percent != that.percent) return false;
-        if (priority != that.priority) return false;
-        if (difficulty != that.difficulty) return false;
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (expname != null ? !expname.equals(that.expname) : that.expname != null) return false;
-
-        return true;
+        CourseExp courseExp = (CourseExp) o;
+        return percent == courseExp.percent && priority == courseExp.priority && difficulty == courseExp.difficulty && Objects.equals(courseId, courseExp.courseId) && Objects.equals(expname, courseExp.expname);
     }
 
     @Override
     public int hashCode() {
-        int result = courseId != null ? courseId.hashCode() : 0;
-        result = 31 * result + (expname != null ? expname.hashCode() : 0);
-        result = 31 * result + percent;
-        result = 31 * result + priority;
-        result = 31 * result + difficulty;
-        return result;
+        return Objects.hash(courseId, expname, percent, priority, difficulty);
     }
 }

@@ -1,20 +1,37 @@
 package com.tongji.software_management.entity.DBEntity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "practice", schema = "education")
-@IdClass(PracticeEntityPK.class)
+@IdClass(PracticePK.class)
 public class Practice {
+    private String practiceName;
     private String courseId;
     private String classId;
-    private String practiceName;
-    private Timestamp startTime;
     private Timestamp endTime;
+    private Timestamp startTime;
 
     @Id
-    @Column(name = "courseID")
+    @Column(name = "practice_name")
+    public String getPracticeName() {
+        return practiceName;
+    }
+
+    public void setPracticeName(String practiceName) {
+        this.practiceName = practiceName;
+    }
+
+    @Id
+    @Column(name = "course_id")
     public String getCourseId() {
         return courseId;
     }
@@ -24,7 +41,7 @@ public class Practice {
     }
 
     @Id
-    @Column(name = "classID")
+    @Column(name = "class_id")
     public String getClassId() {
         return classId;
     }
@@ -33,28 +50,8 @@ public class Practice {
         this.classId = classId;
     }
 
-    @Id
-    @Column(name = "practiceName")
-    public String getPracticeName() {
-        return practiceName;
-    }
-
-    public void setPracticeName(String practiceName) {
-        this.practiceName = practiceName;
-    }
-
     @Basic
-    @Column(name = "startTime")
-    public Timestamp getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Timestamp startTime) {
-        this.startTime = startTime;
-    }
-
-    @Basic
-    @Column(name = "endTime")
+    @Column(name = "end_time")
     public Timestamp getEndTime() {
         return endTime;
     }
@@ -63,29 +60,26 @@ public class Practice {
         this.endTime = endTime;
     }
 
+    @Basic
+    @Column(name = "start_time")
+    public Timestamp getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        Practice that = (Practice) o;
-
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (classId != null ? !classId.equals(that.classId) : that.classId != null) return false;
-        if (practiceName != null ? !practiceName.equals(that.practiceName) : that.practiceName != null) return false;
-        if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) return false;
-        if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null) return false;
-
-        return true;
+        Practice practice = (Practice) o;
+        return Objects.equals(practiceName, practice.practiceName) && Objects.equals(courseId, practice.courseId) && Objects.equals(classId, practice.classId) && Objects.equals(endTime, practice.endTime) && Objects.equals(startTime, practice.startTime);
     }
 
     @Override
     public int hashCode() {
-        int result = courseId != null ? courseId.hashCode() : 0;
-        result = 31 * result + (classId != null ? classId.hashCode() : 0);
-        result = 31 * result + (practiceName != null ? practiceName.hashCode() : 0);
-        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
-        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
-        return result;
+        return Objects.hash(practiceName, courseId, classId, endTime, startTime);
     }
 }

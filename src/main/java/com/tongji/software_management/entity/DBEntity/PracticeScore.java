@@ -1,11 +1,19 @@
 package com.tongji.software_management.entity.DBEntity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "practicescore", schema = "education")
-@IdClass(PracticeScoreEntityPK.class)
+@Table(name = "practice_score", schema = "education", catalog = "")
+@IdClass(PracticeScorePK.class)
 public class PracticeScore {
     private String courseId;
     private String classId;
@@ -16,7 +24,7 @@ public class PracticeScore {
     private int groupNumber;
 
     @Id
-    @Column(name = "courseID")
+    @Column(name = "course_id")
     public String getCourseId() {
         return courseId;
     }
@@ -26,7 +34,7 @@ public class PracticeScore {
     }
 
     @Id
-    @Column(name = "classID")
+    @Column(name = "class_id")
     public String getClassId() {
         return classId;
     }
@@ -36,7 +44,7 @@ public class PracticeScore {
     }
 
     @Id
-    @Column(name = "practiceName")
+    @Column(name = "practice_name")
     public String getPracticeName() {
         return practiceName;
     }
@@ -46,7 +54,7 @@ public class PracticeScore {
     }
 
     @Id
-    @Column(name = "studentNumber")
+    @Column(name = "student_number")
     public String getStudentNumber() {
         return studentNumber;
     }
@@ -56,7 +64,7 @@ public class PracticeScore {
     }
 
     @Basic
-    @Column(name = "individualScore")
+    @Column(name = "individual_score")
     public double getIndividualScore() {
         return individualScore;
     }
@@ -66,7 +74,7 @@ public class PracticeScore {
     }
 
     @Basic
-    @Column(name = "individualTime")
+    @Column(name = "individual_time")
     public Timestamp getIndividualTime() {
         return individualTime;
     }
@@ -76,7 +84,7 @@ public class PracticeScore {
     }
 
     @Basic
-    @Column(name = "groupNumber")
+    @Column(name = "group_number")
     public int getGroupNumber() {
         return groupNumber;
     }
@@ -89,34 +97,12 @@ public class PracticeScore {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         PracticeScore that = (PracticeScore) o;
-
-        if (Double.compare(that.individualScore, individualScore) != 0) return false;
-        if (groupNumber != that.groupNumber) return false;
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (classId != null ? !classId.equals(that.classId) : that.classId != null) return false;
-        if (practiceName != null ? !practiceName.equals(that.practiceName) : that.practiceName != null) return false;
-        if (studentNumber != null ? !studentNumber.equals(that.studentNumber) : that.studentNumber != null)
-            return false;
-        if (individualTime != null ? !individualTime.equals(that.individualTime) : that.individualTime != null)
-            return false;
-
-        return true;
+        return Double.compare(that.individualScore, individualScore) == 0 && groupNumber == that.groupNumber && Objects.equals(courseId, that.courseId) && Objects.equals(classId, that.classId) && Objects.equals(practiceName, that.practiceName) && Objects.equals(studentNumber, that.studentNumber) && Objects.equals(individualTime, that.individualTime);
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = courseId != null ? courseId.hashCode() : 0;
-        result = 31 * result + (classId != null ? classId.hashCode() : 0);
-        result = 31 * result + (practiceName != null ? practiceName.hashCode() : 0);
-        result = 31 * result + (studentNumber != null ? studentNumber.hashCode() : 0);
-        temp = Double.doubleToLongBits(individualScore);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (individualTime != null ? individualTime.hashCode() : 0);
-        result = 31 * result + groupNumber;
-        return result;
+        return Objects.hash(courseId, classId, practiceName, studentNumber, individualScore, individualTime, groupNumber);
     }
 }

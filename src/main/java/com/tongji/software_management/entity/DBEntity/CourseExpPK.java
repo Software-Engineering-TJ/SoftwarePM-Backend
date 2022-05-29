@@ -3,12 +3,13 @@ package com.tongji.software_management.entity.DBEntity;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Objects;
 
-public class CourseExpEntityPK implements Serializable {
+public class CourseExpPK implements Serializable {
     private String courseId;
     private String expname;
 
-    @Column(name = "courseID")
+    @Column(name = "course_id")
     @Id
     public String getCourseId() {
         return courseId;
@@ -32,19 +33,12 @@ public class CourseExpEntityPK implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        CourseExpEntityPK that = (CourseExpEntityPK) o;
-
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (expname != null ? !expname.equals(that.expname) : that.expname != null) return false;
-
-        return true;
+        CourseExpPK that = (CourseExpPK) o;
+        return Objects.equals(courseId, that.courseId) && Objects.equals(expname, that.expname);
     }
 
     @Override
     public int hashCode() {
-        int result = courseId != null ? courseId.hashCode() : 0;
-        result = 31 * result + (expname != null ? expname.hashCode() : 0);
-        return result;
+        return Objects.hash(courseId, expname);
     }
 }

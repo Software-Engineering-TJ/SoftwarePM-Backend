@@ -3,13 +3,14 @@ package com.tongji.software_management.entity.DBEntity;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Objects;
 
-public class NoticeEntityPK implements Serializable {
+public class NoticePK implements Serializable {
     private String courseId;
     private String classId;
     private String date;
 
-    @Column(name = "courseID")
+    @Column(name = "course_id")
     @Id
     public String getCourseId() {
         return courseId;
@@ -19,7 +20,7 @@ public class NoticeEntityPK implements Serializable {
         this.courseId = courseId;
     }
 
-    @Column(name = "classID")
+    @Column(name = "class_id")
     @Id
     public String getClassId() {
         return classId;
@@ -43,21 +44,12 @@ public class NoticeEntityPK implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        NoticeEntityPK that = (NoticeEntityPK) o;
-
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (classId != null ? !classId.equals(that.classId) : that.classId != null) return false;
-        if (date != null ? !date.equals(that.date) : that.date != null) return false;
-
-        return true;
+        NoticePK noticePK = (NoticePK) o;
+        return Objects.equals(courseId, noticePK.courseId) && Objects.equals(classId, noticePK.classId) && Objects.equals(date, noticePK.date);
     }
 
     @Override
     public int hashCode() {
-        int result = courseId != null ? courseId.hashCode() : 0;
-        result = 31 * result + (classId != null ? classId.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        return result;
+        return Objects.hash(courseId, classId, date);
     }
 }

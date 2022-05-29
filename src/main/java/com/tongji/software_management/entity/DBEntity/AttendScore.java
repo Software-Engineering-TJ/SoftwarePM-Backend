@@ -5,13 +5,14 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Builder
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "attendscore", schema = "education")
-@IdClass(AttendScoreEntityPK.class)
+@Entity
+@Table(name = "attend_score", schema = "education", catalog = "")
+@IdClass(AttendScorePK.class)
 public class AttendScore {
     private String courseId;
     private String classId;
@@ -20,7 +21,7 @@ public class AttendScore {
     private int onTime;
 
     @Id
-    @Column(name = "courseID")
+    @Column(name = "course_id")
     public String getCourseId() {
         return courseId;
     }
@@ -30,7 +31,7 @@ public class AttendScore {
     }
 
     @Id
-    @Column(name = "classID")
+    @Column(name = "class_id")
     public String getClassId() {
         return classId;
     }
@@ -50,7 +51,7 @@ public class AttendScore {
     }
 
     @Id
-    @Column(name = "studentNumber")
+    @Column(name = "student_number")
     public String getStudentNumber() {
         return studentNumber;
     }
@@ -73,26 +74,12 @@ public class AttendScore {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         AttendScore that = (AttendScore) o;
-
-        if (onTime != that.onTime) return false;
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (classId != null ? !classId.equals(that.classId) : that.classId != null) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (studentNumber != null ? !studentNumber.equals(that.studentNumber) : that.studentNumber != null)
-            return false;
-
-        return true;
+        return onTime == that.onTime && Objects.equals(courseId, that.courseId) && Objects.equals(classId, that.classId) && Objects.equals(title, that.title) && Objects.equals(studentNumber, that.studentNumber);
     }
 
     @Override
     public int hashCode() {
-        int result = courseId != null ? courseId.hashCode() : 0;
-        result = 31 * result + (classId != null ? classId.hashCode() : 0);
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (studentNumber != null ? studentNumber.hashCode() : 0);
-        result = 31 * result + onTime;
-        return result;
+        return Objects.hash(courseId, classId, title, studentNumber, onTime);
     }
 }

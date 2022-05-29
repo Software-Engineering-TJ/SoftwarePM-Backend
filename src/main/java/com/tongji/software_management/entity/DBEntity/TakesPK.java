@@ -3,13 +3,14 @@ package com.tongji.software_management.entity.DBEntity;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Objects;
 
-public class TakesEntityPK implements Serializable {
+public class TakesPK implements Serializable {
     private String studentNumber;
     private String courseId;
     private String classId;
 
-    @Column(name = "studentNumber")
+    @Column(name = "student_number")
     @Id
     public String getStudentNumber() {
         return studentNumber;
@@ -19,7 +20,7 @@ public class TakesEntityPK implements Serializable {
         this.studentNumber = studentNumber;
     }
 
-    @Column(name = "courseID")
+    @Column(name = "course_id")
     @Id
     public String getCourseId() {
         return courseId;
@@ -29,7 +30,7 @@ public class TakesEntityPK implements Serializable {
         this.courseId = courseId;
     }
 
-    @Column(name = "classID")
+    @Column(name = "class_id")
     @Id
     public String getClassId() {
         return classId;
@@ -43,22 +44,12 @@ public class TakesEntityPK implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        TakesEntityPK that = (TakesEntityPK) o;
-
-        if (studentNumber != null ? !studentNumber.equals(that.studentNumber) : that.studentNumber != null)
-            return false;
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (classId != null ? !classId.equals(that.classId) : that.classId != null) return false;
-
-        return true;
+        TakesPK takesPK = (TakesPK) o;
+        return Objects.equals(studentNumber, takesPK.studentNumber) && Objects.equals(courseId, takesPK.courseId) && Objects.equals(classId, takesPK.classId);
     }
 
     @Override
     public int hashCode() {
-        int result = studentNumber != null ? studentNumber.hashCode() : 0;
-        result = 31 * result + (courseId != null ? courseId.hashCode() : 0);
-        result = 31 * result + (classId != null ? classId.hashCode() : 0);
-        return result;
+        return Objects.hash(studentNumber, courseId, classId);
     }
 }

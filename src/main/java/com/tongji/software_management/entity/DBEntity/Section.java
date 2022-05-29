@@ -5,13 +5,13 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "section", schema = "education")
-@IdClass(SectionEntityPK.class)
+@IdClass(SectionPK.class)
 public class Section {
     private String courseId;
     private String classId;
@@ -21,7 +21,7 @@ public class Section {
     private int currentNumber;
 
     @Id
-    @Column(name = "courseID")
+    @Column(name = "course_id")
     public String getCourseId() {
         return courseId;
     }
@@ -31,7 +31,7 @@ public class Section {
     }
 
     @Id
-    @Column(name = "classID")
+    @Column(name = "class_id")
     public String getClassId() {
         return classId;
     }
@@ -71,7 +71,7 @@ public class Section {
     }
 
     @Basic
-    @Column(name = "currentNumber")
+    @Column(name = "current_number")
     public int getCurrentNumber() {
         return currentNumber;
     }
@@ -84,27 +84,12 @@ public class Section {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        Section that = (Section) o;
-
-        if (day != that.day) return false;
-        if (time != that.time) return false;
-        if (number != that.number) return false;
-        if (currentNumber != that.currentNumber) return false;
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (classId != null ? !classId.equals(that.classId) : that.classId != null) return false;
-
-        return true;
+        Section section = (Section) o;
+        return day == section.day && time == section.time && number == section.number && currentNumber == section.currentNumber && Objects.equals(courseId, section.courseId) && Objects.equals(classId, section.classId);
     }
 
     @Override
     public int hashCode() {
-        int result = courseId != null ? courseId.hashCode() : 0;
-        result = 31 * result + (classId != null ? classId.hashCode() : 0);
-        result = 31 * result + day;
-        result = 31 * result + time;
-        result = 31 * result + number;
-        result = 31 * result + currentNumber;
-        return result;
+        return Objects.hash(courseId, classId, day, time, number, currentNumber);
     }
 }

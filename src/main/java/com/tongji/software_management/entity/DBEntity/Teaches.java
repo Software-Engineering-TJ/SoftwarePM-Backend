@@ -4,21 +4,24 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import java.util.Objects;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "teaches", schema = "education")
-@IdClass(TeachesEntityPK.class)
+@IdClass(TeachesPK.class)
 public class Teaches {
     private String instructorNumber;
     private String courseId;
     private String classId;
 
     @Id
-    @Column(name = "instructorNumber")
+    @Column(name = "instructor_number")
     public String getInstructorNumber() {
         return instructorNumber;
     }
@@ -28,7 +31,7 @@ public class Teaches {
     }
 
     @Id
-    @Column(name = "courseID")
+    @Column(name = "course_id")
     public String getCourseId() {
         return courseId;
     }
@@ -38,7 +41,7 @@ public class Teaches {
     }
 
     @Id
-    @Column(name = "classID")
+    @Column(name = "class_id")
     public String getClassId() {
         return classId;
     }
@@ -51,22 +54,12 @@ public class Teaches {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        Teaches that = (Teaches) o;
-
-        if (instructorNumber != null ? !instructorNumber.equals(that.instructorNumber) : that.instructorNumber != null)
-            return false;
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (classId != null ? !classId.equals(that.classId) : that.classId != null) return false;
-
-        return true;
+        Teaches teaches = (Teaches) o;
+        return Objects.equals(instructorNumber, teaches.instructorNumber) && Objects.equals(courseId, teaches.courseId) && Objects.equals(classId, teaches.classId);
     }
 
     @Override
     public int hashCode() {
-        int result = instructorNumber != null ? instructorNumber.hashCode() : 0;
-        result = 31 * result + (courseId != null ? courseId.hashCode() : 0);
-        result = 31 * result + (classId != null ? classId.hashCode() : 0);
-        return result;
+        return Objects.hash(instructorNumber, courseId, classId);
     }
 }

@@ -1,18 +1,20 @@
 package com.tongji.software_management.entity.DBEntity;
 
-import com.tongji.software_management.entity.LogicalEntity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Objects;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "instructor", schema = "education")
-public class Instructor extends User {
+public class Instructor {
     private String instructorNumber;
     private String email;
     private String password;
@@ -21,9 +23,8 @@ public class Instructor extends User {
     private String phoneNumber;
     private int status;
 
-
     @Id
-    @Column(name = "instructorNumber")
+    @Column(name = "instructor_number")
     public String getInstructorNumber() {
         return instructorNumber;
     }
@@ -73,7 +74,7 @@ public class Instructor extends User {
     }
 
     @Basic
-    @Column(name = "phoneNumber")
+    @Column(name = "phone_number")
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -96,30 +97,12 @@ public class Instructor extends User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Instructor that = (Instructor) o;
-
-        if (sex != that.sex) return false;
-        if (status != that.status) return false;
-        if (instructorNumber != null ? !instructorNumber.equals(that.instructorNumber) : that.instructorNumber != null)
-            return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null) return false;
-
-        return true;
+        return sex == that.sex && status == that.status && Objects.equals(instructorNumber, that.instructorNumber) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(name, that.name) && Objects.equals(phoneNumber, that.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        int result = instructorNumber != null ? instructorNumber.hashCode() : 0;
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + sex;
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
-        result = 31 * result + status;
-        return result;
+        return Objects.hash(instructorNumber, email, password, name, sex, phoneNumber, status);
     }
 }

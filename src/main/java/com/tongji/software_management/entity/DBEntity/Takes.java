@@ -1,10 +1,17 @@
 package com.tongji.software_management.entity.DBEntity;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.util.Objects;
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "takes", schema = "education")
-@IdClass(TakesEntityPK.class)
+@IdClass(TakesPK.class)
 public class Takes {
     private String studentNumber;
     private String courseId;
@@ -12,7 +19,7 @@ public class Takes {
     private int status;
 
     @Id
-    @Column(name = "studentNumber")
+    @Column(name = "student_number")
     public String getStudentNumber() {
         return studentNumber;
     }
@@ -22,7 +29,7 @@ public class Takes {
     }
 
     @Id
-    @Column(name = "courseID")
+    @Column(name = "course_id")
     public String getCourseId() {
         return courseId;
     }
@@ -32,7 +39,7 @@ public class Takes {
     }
 
     @Id
-    @Column(name = "classID")
+    @Column(name = "class_id")
     public String getClassId() {
         return classId;
     }
@@ -55,24 +62,12 @@ public class Takes {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        Takes that = (Takes) o;
-
-        if (status != that.status) return false;
-        if (studentNumber != null ? !studentNumber.equals(that.studentNumber) : that.studentNumber != null)
-            return false;
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (classId != null ? !classId.equals(that.classId) : that.classId != null) return false;
-
-        return true;
+        Takes takes = (Takes) o;
+        return status == takes.status && Objects.equals(studentNumber, takes.studentNumber) && Objects.equals(courseId, takes.courseId) && Objects.equals(classId, takes.classId);
     }
 
     @Override
     public int hashCode() {
-        int result = studentNumber != null ? studentNumber.hashCode() : 0;
-        result = 31 * result + (courseId != null ? courseId.hashCode() : 0);
-        result = 31 * result + (classId != null ? classId.hashCode() : 0);
-        result = 31 * result + status;
-        return result;
+        return Objects.hash(studentNumber, courseId, classId, status);
     }
 }

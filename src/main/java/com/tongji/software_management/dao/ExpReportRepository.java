@@ -1,7 +1,7 @@
 package com.tongji.software_management.dao;
 
 import com.tongji.software_management.entity.DBEntity.ExpReport;
-import com.tongji.software_management.entity.DBEntity.ExpReportEntityPK;
+import com.tongji.software_management.entity.DBEntity.ExpReportPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface ExpReportRepository extends JpaRepository<ExpReport, ExpReportEntityPK> {
+public interface ExpReportRepository extends JpaRepository<ExpReport, ExpReportPK> {
     List<ExpReport> findExpReportsByCourseIdAndClassId(String courseID, String classID);
     int deleteExpReportByCourseIdAndClassIdAndExpnameAndReportName(String courseID, String classID, String expname, String reportName);
     @Transactional

@@ -3,13 +3,15 @@ package com.tongji.software_management.entity.DBEntity;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Objects;
 
-public class ExperimentEntityPK implements Serializable {
+public class ExpReportPK implements Serializable {
     private String courseId;
     private String expname;
     private String classId;
+    private String reportName;
 
-    @Column(name = "courseID")
+    @Column(name = "course_id")
     @Id
     public String getCourseId() {
         return courseId;
@@ -29,7 +31,7 @@ public class ExperimentEntityPK implements Serializable {
         this.expname = expname;
     }
 
-    @Column(name = "classID")
+    @Column(name = "class_id")
     @Id
     public String getClassId() {
         return classId;
@@ -39,25 +41,26 @@ public class ExperimentEntityPK implements Serializable {
         this.classId = classId;
     }
 
+    @Column(name = "report_name")
+    @Id
+    public String getReportName() {
+        return reportName;
+    }
+
+    public void setReportName(String reportName) {
+        this.reportName = reportName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        ExperimentEntityPK that = (ExperimentEntityPK) o;
-
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (expname != null ? !expname.equals(that.expname) : that.expname != null) return false;
-        if (classId != null ? !classId.equals(that.classId) : that.classId != null) return false;
-
-        return true;
+        ExpReportPK that = (ExpReportPK) o;
+        return Objects.equals(courseId, that.courseId) && Objects.equals(expname, that.expname) && Objects.equals(classId, that.classId) && Objects.equals(reportName, that.reportName);
     }
 
     @Override
     public int hashCode() {
-        int result = courseId != null ? courseId.hashCode() : 0;
-        result = 31 * result + (expname != null ? expname.hashCode() : 0);
-        result = 31 * result + (classId != null ? classId.hashCode() : 0);
-        return result;
+        return Objects.hash(courseId, expname, classId, reportName);
     }
 }

@@ -5,13 +5,14 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "expscore", schema = "education")
-@IdClass(ExpScoreEntityPK.class)
+@Table(name = "exp_score", schema = "education", catalog = "")
+@IdClass(ExpScorePK.class)
 public class ExpScore {
     private String studentNumber;
     private String courseId;
@@ -22,7 +23,7 @@ public class ExpScore {
     private String fileUrl;
 
     @Id
-    @Column(name = "studentNumber")
+    @Column(name = "student_number")
     public String getStudentNumber() {
         return studentNumber;
     }
@@ -32,7 +33,7 @@ public class ExpScore {
     }
 
     @Id
-    @Column(name = "courseID")
+    @Column(name = "course_id")
     public String getCourseId() {
         return courseId;
     }
@@ -52,7 +53,7 @@ public class ExpScore {
     }
 
     @Id
-    @Column(name = "classID")
+    @Column(name = "class_id")
     public String getClassId() {
         return classId;
     }
@@ -82,7 +83,7 @@ public class ExpScore {
     }
 
     @Basic
-    @Column(name = "fileUrl")
+    @Column(name = "file_url")
     public String getFileUrl() {
         return fileUrl;
     }
@@ -95,33 +96,12 @@ public class ExpScore {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        ExpScore that = (ExpScore) o;
-
-        if (Double.compare(that.score, score) != 0) return false;
-        if (studentNumber != null ? !studentNumber.equals(that.studentNumber) : that.studentNumber != null)
-            return false;
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (expname != null ? !expname.equals(that.expname) : that.expname != null) return false;
-        if (classId != null ? !classId.equals(that.classId) : that.classId != null) return false;
-        if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
-        if (fileUrl != null ? !fileUrl.equals(that.fileUrl) : that.fileUrl != null) return false;
-
-        return true;
+        ExpScore expScore = (ExpScore) o;
+        return Double.compare(expScore.score, score) == 0 && Objects.equals(studentNumber, expScore.studentNumber) && Objects.equals(courseId, expScore.courseId) && Objects.equals(expname, expScore.expname) && Objects.equals(classId, expScore.classId) && Objects.equals(comment, expScore.comment) && Objects.equals(fileUrl, expScore.fileUrl);
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = studentNumber != null ? studentNumber.hashCode() : 0;
-        result = 31 * result + (courseId != null ? courseId.hashCode() : 0);
-        result = 31 * result + (expname != null ? expname.hashCode() : 0);
-        result = 31 * result + (classId != null ? classId.hashCode() : 0);
-        temp = Double.doubleToLongBits(score);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (comment != null ? comment.hashCode() : 0);
-        result = 31 * result + (fileUrl != null ? fileUrl.hashCode() : 0);
-        return result;
+        return Objects.hash(studentNumber, courseId, expname, classId, score, comment, fileUrl);
     }
 }

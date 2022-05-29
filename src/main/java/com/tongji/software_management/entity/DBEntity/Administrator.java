@@ -1,11 +1,19 @@
 package com.tongji.software_management.entity.DBEntity;
 
-import com.tongji.software_management.entity.LogicalEntity.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Objects;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "administrator", schema = "education")
 public class Administrator {
     private String adminNumber;
     private String email;
@@ -13,7 +21,7 @@ public class Administrator {
     private String name;
 
     @Id
-    @Column(name = "adminNumber")
+    @Column(name = "admin_number")
     public String getAdminNumber() {
         return adminNumber;
     }
@@ -56,24 +64,12 @@ public class Administrator {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Administrator that = (Administrator) o;
-
-        if (adminNumber != null ? !adminNumber.equals(that.adminNumber) : that.adminNumber != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-        return true;
+        return Objects.equals(adminNumber, that.adminNumber) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        int result = adminNumber != null ? adminNumber.hashCode() : 0;
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return Objects.hash(adminNumber, email, password, name);
     }
-
 }

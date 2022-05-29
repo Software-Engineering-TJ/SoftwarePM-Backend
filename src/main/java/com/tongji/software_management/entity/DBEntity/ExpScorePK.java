@@ -3,14 +3,15 @@ package com.tongji.software_management.entity.DBEntity;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Objects;
 
-public class ExpScoreEntityPK implements Serializable {
+public class ExpScorePK implements Serializable {
     private String studentNumber;
     private String courseId;
     private String expname;
     private String classId;
 
-    @Column(name = "studentNumber")
+    @Column(name = "student_number")
     @Id
     public String getStudentNumber() {
         return studentNumber;
@@ -20,7 +21,7 @@ public class ExpScoreEntityPK implements Serializable {
         this.studentNumber = studentNumber;
     }
 
-    @Column(name = "courseID")
+    @Column(name = "course_id")
     @Id
     public String getCourseId() {
         return courseId;
@@ -40,7 +41,7 @@ public class ExpScoreEntityPK implements Serializable {
         this.expname = expname;
     }
 
-    @Column(name = "classID")
+    @Column(name = "class_id")
     @Id
     public String getClassId() {
         return classId;
@@ -54,24 +55,12 @@ public class ExpScoreEntityPK implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        ExpScoreEntityPK that = (ExpScoreEntityPK) o;
-
-        if (studentNumber != null ? !studentNumber.equals(that.studentNumber) : that.studentNumber != null)
-            return false;
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (expname != null ? !expname.equals(that.expname) : that.expname != null) return false;
-        if (classId != null ? !classId.equals(that.classId) : that.classId != null) return false;
-
-        return true;
+        ExpScorePK that = (ExpScorePK) o;
+        return Objects.equals(studentNumber, that.studentNumber) && Objects.equals(courseId, that.courseId) && Objects.equals(expname, that.expname) && Objects.equals(classId, that.classId);
     }
 
     @Override
     public int hashCode() {
-        int result = studentNumber != null ? studentNumber.hashCode() : 0;
-        result = 31 * result + (courseId != null ? courseId.hashCode() : 0);
-        result = 31 * result + (expname != null ? expname.hashCode() : 0);
-        result = 31 * result + (classId != null ? classId.hashCode() : 0);
-        return result;
+        return Objects.hash(studentNumber, courseId, expname, classId);
     }
 }

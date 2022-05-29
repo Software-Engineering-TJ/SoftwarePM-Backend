@@ -1,7 +1,7 @@
 package com.tongji.software_management.dao;
 
 import com.tongji.software_management.entity.DBEntity.Takes;
-import com.tongji.software_management.entity.DBEntity.TakesEntityPK;
+import com.tongji.software_management.entity.DBEntity.TakesPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface TakesRepository extends JpaRepository<Takes, TakesEntityPK> {
+public interface TakesRepository extends JpaRepository<Takes, TakesPK> {
     List<Takes> findTakesByStudentNumber(String studentNumber);
     List<Takes> findTakesByCourseIdAndClassId(String courseID, String classID);
     Takes findTakesByCourseIdAndClassIdAndStudentNumber(String courseID, String classID, String studentNumber);

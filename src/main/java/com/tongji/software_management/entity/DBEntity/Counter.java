@@ -1,33 +1,23 @@
 package com.tongji.software_management.entity.DBEntity;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Objects;
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "counter", schema = "education")
 public class Counter {
-    private int courseId;
-    private int classId;
     private int id;
-
-    @Basic
-    @Column(name = "courseID")
-    public int getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
-    }
-
-    @Basic
-    @Column(name = "classID")
-    public int getClassId() {
-        return classId;
-    }
-
-    public void setClassId(int classId) {
-        this.classId = classId;
-    }
+    private Integer classId;
+    private Integer courseId;
 
     @Id
     @Column(name = "id")
@@ -39,25 +29,36 @@ public class Counter {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "class_id")
+    public Integer getClassId() {
+        return classId;
+    }
+
+    public void setClassId(Integer classId) {
+        this.classId = classId;
+    }
+
+    @Basic
+    @Column(name = "course_id")
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        Counter that = (Counter) o;
-
-        if (courseId != that.courseId) return false;
-        if (classId != that.classId) return false;
-        if (id != that.id) return false;
-
-        return true;
+        Counter counter = (Counter) o;
+        return id == counter.id && Objects.equals(classId, counter.classId) && Objects.equals(courseId, counter.courseId);
     }
 
     @Override
     public int hashCode() {
-        int result = courseId;
-        result = 31 * result + classId;
-        result = 31 * result + id;
-        return result;
+        return Objects.hash(id, classId, courseId);
     }
 }

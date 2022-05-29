@@ -1,7 +1,7 @@
 package com.tongji.software_management.dao;
 
 import com.tongji.software_management.entity.DBEntity.ExpScore;
-import com.tongji.software_management.entity.DBEntity.ExpScoreEntityPK;
+import com.tongji.software_management.entity.DBEntity.ExpScorePK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface ExpScoreRepository extends JpaRepository<ExpScore, ExpScoreEntityPK> {
+public interface ExpScoreRepository extends JpaRepository<ExpScore, ExpScorePK> {
     ExpScore findExpScoreByCourseIdAndClassIdAndExpnameAndStudentNumber(String courseID, String classID, String expname, String studentNumber);
     List<ExpScore> findExpScoresByCourseIdAndExpnameAndClassId(String courseID, String expname, String classID);
     int deleteExpScoreByFileUrl(String fileUrl);

@@ -1,20 +1,28 @@
 package com.tongji.software_management.entity.DBEntity;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.util.Objects;
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "choicequestion", schema = "education")
+@Table(name = "choice_question", schema = "education", catalog = "")
 public class ChoiceQuestion {
     private int choiceId;
-    private String choiceQuestion;
-    private String choiceOption;
-    private int choiceDifficulty;
-    private String choiceAnswer;
     private String choiceAnalysis;
-    private double choiceScore;
+    private String choiceAnswer;
+    private Integer choiceDifficulty;
+    private String choiceOption;
+    private String choiceQuestion;
+    private Double choiceScore;
 
     @Id
-    @Column(name = "choiceId")
+    @Column(name = "choice_id")
     public int getChoiceId() {
         return choiceId;
     }
@@ -24,47 +32,7 @@ public class ChoiceQuestion {
     }
 
     @Basic
-    @Column(name = "choiceQuestion")
-    public String getChoiceQuestion() {
-        return choiceQuestion;
-    }
-
-    public void setChoiceQuestion(String choiceQuestion) {
-        this.choiceQuestion = choiceQuestion;
-    }
-
-    @Basic
-    @Column(name = "choiceOption")
-    public String getChoiceOption() {
-        return choiceOption;
-    }
-
-    public void setChoiceOption(String choiceOption) {
-        this.choiceOption = choiceOption;
-    }
-
-    @Basic
-    @Column(name = "choiceDifficulty")
-    public int getChoiceDifficulty() {
-        return choiceDifficulty;
-    }
-
-    public void setChoiceDifficulty(int choiceDifficulty) {
-        this.choiceDifficulty = choiceDifficulty;
-    }
-
-    @Basic
-    @Column(name = "choiceAnswer")
-    public String getChoiceAnswer() {
-        return choiceAnswer;
-    }
-
-    public void setChoiceAnswer(String choiceAnswer) {
-        this.choiceAnswer = choiceAnswer;
-    }
-
-    @Basic
-    @Column(name = "choiceAnalysis")
+    @Column(name = "choice_analysis")
     public String getChoiceAnalysis() {
         return choiceAnalysis;
     }
@@ -74,12 +42,52 @@ public class ChoiceQuestion {
     }
 
     @Basic
-    @Column(name = "choiceScore")
-    public double getChoiceScore() {
+    @Column(name = "choice_answer")
+    public String getChoiceAnswer() {
+        return choiceAnswer;
+    }
+
+    public void setChoiceAnswer(String choiceAnswer) {
+        this.choiceAnswer = choiceAnswer;
+    }
+
+    @Basic
+    @Column(name = "choice_difficulty")
+    public Integer getChoiceDifficulty() {
+        return choiceDifficulty;
+    }
+
+    public void setChoiceDifficulty(Integer choiceDifficulty) {
+        this.choiceDifficulty = choiceDifficulty;
+    }
+
+    @Basic
+    @Column(name = "choice_option")
+    public String getChoiceOption() {
+        return choiceOption;
+    }
+
+    public void setChoiceOption(String choiceOption) {
+        this.choiceOption = choiceOption;
+    }
+
+    @Basic
+    @Column(name = "choice_question")
+    public String getChoiceQuestion() {
+        return choiceQuestion;
+    }
+
+    public void setChoiceQuestion(String choiceQuestion) {
+        this.choiceQuestion = choiceQuestion;
+    }
+
+    @Basic
+    @Column(name = "choice_score")
+    public Double getChoiceScore() {
         return choiceScore;
     }
 
-    public void setChoiceScore(double choiceScore) {
+    public void setChoiceScore(Double choiceScore) {
         this.choiceScore = choiceScore;
     }
 
@@ -87,34 +95,12 @@ public class ChoiceQuestion {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         ChoiceQuestion that = (ChoiceQuestion) o;
-
-        if (choiceId != that.choiceId) return false;
-        if (choiceDifficulty != that.choiceDifficulty) return false;
-        if (Double.compare(that.choiceScore, choiceScore) != 0) return false;
-        if (choiceQuestion != null ? !choiceQuestion.equals(that.choiceQuestion) : that.choiceQuestion != null)
-            return false;
-        if (choiceOption != null ? !choiceOption.equals(that.choiceOption) : that.choiceOption != null) return false;
-        if (choiceAnswer != null ? !choiceAnswer.equals(that.choiceAnswer) : that.choiceAnswer != null) return false;
-        if (choiceAnalysis != null ? !choiceAnalysis.equals(that.choiceAnalysis) : that.choiceAnalysis != null)
-            return false;
-
-        return true;
+        return choiceId == that.choiceId && Objects.equals(choiceAnalysis, that.choiceAnalysis) && Objects.equals(choiceAnswer, that.choiceAnswer) && Objects.equals(choiceDifficulty, that.choiceDifficulty) && Objects.equals(choiceOption, that.choiceOption) && Objects.equals(choiceQuestion, that.choiceQuestion) && Objects.equals(choiceScore, that.choiceScore);
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = choiceId;
-        result = 31 * result + (choiceQuestion != null ? choiceQuestion.hashCode() : 0);
-        result = 31 * result + (choiceOption != null ? choiceOption.hashCode() : 0);
-        result = 31 * result + choiceDifficulty;
-        result = 31 * result + (choiceAnswer != null ? choiceAnswer.hashCode() : 0);
-        result = 31 * result + (choiceAnalysis != null ? choiceAnalysis.hashCode() : 0);
-        temp = Double.doubleToLongBits(choiceScore);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        return Objects.hash(choiceId, choiceAnalysis, choiceAnswer, choiceDifficulty, choiceOption, choiceQuestion, choiceScore);
     }
 }
