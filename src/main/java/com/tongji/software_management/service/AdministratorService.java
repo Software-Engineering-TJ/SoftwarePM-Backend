@@ -75,13 +75,13 @@ public class AdministratorService {
             return "The Email has been existed!";
         }
         //2.email没问题再插入学生信息
-        studentRepository.save(Student.builder()
-                .studentNumber(studentNumber)
-                .email(email)
-                .name(name)
-                .phoneNumber(phoneNumber)
-                .sex(sex)
-                .build());
+//        studentRepository.save(Student.builder()
+//                .studentNumber(studentNumber)
+//                .email(email)
+//                .name(name)
+//                .phoneNumber(phoneNumber)
+//                .sex(sex)
+//                .build());
         return "success";  //如果没有任何意外，msg为"success"
     }
 
@@ -234,13 +234,13 @@ public class AdministratorService {
             return "The Email has been existed!";
         }
         //2.email没问题再插入教师信息
-        instructorRepository.save(Instructor.builder()
-                .instructorNumber(instructorNumber)
-                .email(email)
-                .name(name)
-                .phoneNumber(phoneNumber)
-                .sex(sex)
-                .build());
+//        instructorRepository.save(Instructor.builder()
+//                .instructorNumber(instructorNumber)
+//                .email(email)
+//                .name(name)
+//                .phoneNumber(phoneNumber)
+//                .sex(sex)
+//                .build());
 
         return "success";  //如果没有任何意外，msg为"success"
     }

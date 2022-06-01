@@ -12,14 +12,30 @@ import com.tongji.software_management.service.InstructorService;
 import com.tongji.software_management.service.StudentService;
 import com.tongji.software_management.service.UserService;
 import com.tongji.software_management.utils.ApiResultHandler;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RestController
+@RequestMapping("/")
 public class AdministratorController {
 
     @Resource
@@ -31,10 +47,11 @@ public class AdministratorController {
     @Resource
     private InstructorService instructorService;
 
+    @PostMapping("")
     public ApiResult alterUserInformation(@RequestBody JSONObject reqObject) {
 
         String userNumber = (String) reqObject.get("userNumber");
-        ; //主码
+        //主码
         String email = (String) reqObject.get("email");
         String name = (String) reqObject.get("name");
         int sex = (reqObject.get("sex").equals("男")) ? 1 : 0;
@@ -53,6 +70,7 @@ public class AdministratorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult getAdministrationInfo(@RequestBody JSONObject reqObject) {
 
         String adminNumber = (String) reqObject.get("adminNumber");
@@ -64,6 +82,7 @@ public class AdministratorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult getStudentByStudentNumber(@RequestBody JSONObject reqObject) {
 
         String studentNumber = (String) reqObject.get("studentNumber");
@@ -76,7 +95,7 @@ public class AdministratorController {
     }
 
     //创建新的学生账号 √
-
+    @PostMapping("")
     public ApiResult createStudent(@RequestBody JSONObject reqObject) {
 
         String name = (String) reqObject.get("name");
@@ -98,6 +117,7 @@ public class AdministratorController {
     }
 
     //创建教师账号 √
+    @PostMapping("")
     public ApiResult createTeacher(@RequestBody JSONObject reqObject) {
 
         String name = (String) reqObject.get("name");
@@ -119,7 +139,7 @@ public class AdministratorController {
     }
 
     //根据学生的学号获得他参与的课程信息 √
-
+    @PostMapping("")
     public ApiResult getTakesByStudentNumber(@RequestBody JSONObject reqObject) {
 
         String studentNumber = (String) reqObject.get("studentNumber");
@@ -130,7 +150,7 @@ public class AdministratorController {
     }
 
     //根据老师的工号获得老师信息，用于搜索对应的老师 √
-
+    @PostMapping("")
     public ApiResult getTeacherByTeacherNumber(@RequestBody JSONObject reqObject) {
 
         String instructorNumber = (String) reqObject.get("instructorNumber");
@@ -141,7 +161,7 @@ public class AdministratorController {
     }
 
     //根据教师工号获得教授的课程信息 √
-
+    @PostMapping("")
     public ApiResult getTeachesByTeacherNumber(@RequestBody JSONObject reqObject) {
 
         String instructorNumber = (String) reqObject.get("instructorNumber");
@@ -151,6 +171,7 @@ public class AdministratorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult changeStudentDuty(@RequestBody JSONObject reqObject) {
 
         String studentNumber = (String) reqObject.get("studentNumber");
@@ -171,7 +192,7 @@ public class AdministratorController {
     }
 
     //修改某个课程下该教师的职务。（将普通老师改为责任教师）
-
+    @PostMapping("")
     public ApiResult changeDutyInstructor(@RequestBody JSONObject reqObject) {
 
         //获取 哪个老师 想设置为 哪个课程 的责任教师
@@ -191,7 +212,7 @@ public class AdministratorController {
     }
 
     //查看某门课程下的责任教师
-
+    @PostMapping("")
     public ApiResult checkTeacherDuty(@RequestBody JSONObject reqObject) {
         String courseID = (String) reqObject.get("courseID");
         //获取责任教师的工号和姓名
@@ -199,6 +220,7 @@ public class AdministratorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult DeleteUser(@RequestBody JSONObject reqObject) {
 
         String email = (String) reqObject.get("email");
@@ -216,7 +238,7 @@ public class AdministratorController {
 
     }
 
-//    public ApiResult createStudentFromExcel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//    public ApiResult createStudentFromExcel(HttpServletRequest req, @RequestBody JSONObject jsonObject) {
 //        System.out.println("先上传excel文件");
 //        //后续需要读取的文件
 //        File objectFile = null;
@@ -300,7 +322,7 @@ public class AdministratorController {
 //    }
 
     //管理员查看需要审核的课程（责任教师申请的）
-
+    @PostMapping("")
     public ApiResult getCourseApplied() {
 
         //等待审核的课程
@@ -326,7 +348,7 @@ public class AdministratorController {
     }
 
     //审核课程
-
+    @PostMapping("")
     public void AuditCourse(@RequestBody JSONObject reqObject) {
 
 
@@ -339,7 +361,7 @@ public class AdministratorController {
     }
 
     //获取所有学生信息
-
+    @PostMapping("")
     public ApiResult getStudentInfo(@RequestBody JSONObject reqObject) {
 
         List<Student> studentList = studentService.getAllStudents();
@@ -357,7 +379,7 @@ public class AdministratorController {
     }
 
     //获取所有老师信息
-
+    @PostMapping("")
     public ApiResult getTeacherInfo(@RequestBody JSONObject reqObject) {
 
         List<Instructor> instructorList = instructorService.getAllInstructors();

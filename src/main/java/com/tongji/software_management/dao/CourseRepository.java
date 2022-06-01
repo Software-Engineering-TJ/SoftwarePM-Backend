@@ -14,7 +14,7 @@ public interface CourseRepository extends JpaRepository<Course, String> {
     Course findCourseByCourseId(String courseID);
     List<Course> findCourseByInstructorNumber(String instructorNumber);
     List<Course> findCoursesByFlag(int flag);
-    int deleteCourseByCourseId(String courseID);
+    void deleteCourseByCourseId(String courseID);
     @Transactional
     @Modifying
     @Query("update Course c set c.instructorNumber = ?2 where (c.courseId = ?1)")

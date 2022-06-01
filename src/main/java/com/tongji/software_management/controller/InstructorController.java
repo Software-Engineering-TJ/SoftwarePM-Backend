@@ -1,6 +1,8 @@
 package com.tongji.software_management.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tongji.software_management.dao.ChoiceQuestionRepository;
+import com.tongji.software_management.dao.CourseRepository;
 import com.tongji.software_management.entity.DBEntity.*;
 import com.tongji.software_management.entity.LogicalEntity.ApiResult;
 import com.tongji.software_management.entity.LogicalEntity.StudentAttendanceInfo;
@@ -24,8 +26,13 @@ public class InstructorController {
     InstructorService instructorService;
     @Resource
     AdministratorService administratorService;
+    @Resource
+    ChoiceQuestionRepository choiceQuestionRepository;
+    @Resource
+    CourseRepository courseRepository;
 
     //获取该考勤已经签到和未签到的学生，要做表的not in操作
+    @PostMapping("")
     public ApiResult viewAttendance(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -55,6 +62,7 @@ public class InstructorController {
     }
 
     //教师发布对抗练习，将题目列表交给PracticeServer
+    @PostMapping("")
     public ApiResult createQuestionList(@RequestBody JSONObject reqObject) {
         int size = (int) reqObject.get("size");
         List<ChoiceQuestion> choiceQuestionList = instructorService.getRandomQuestionList(size);
@@ -62,6 +70,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",choiceQuestionList);
     }
 
+    @PostMapping("")
     public ApiResult getSections(@RequestBody JSONObject reqObject) {
 
         String instructorNumber = (String) reqObject.get("instructorNumber");
@@ -70,6 +79,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult getExperimentInfo(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -79,7 +89,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
-
+    @PostMapping("")
     public ApiResult releaseExperiment(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -102,6 +112,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult examineExperimentInfo(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -112,6 +123,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult modifyExperimentInfo(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -131,6 +143,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult releaseNotice(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -154,6 +167,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult withdrawNotice(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -172,6 +186,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult releaseReportDesc(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -195,6 +210,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult withdrawReportDesc(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -213,6 +229,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult modifyReportDesc(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -234,6 +251,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult getClassInfo(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -304,6 +322,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult releaseSignIn(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -326,6 +345,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult addSection(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -340,6 +360,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",ret != -1 ? "添加课程成功" : "添加课程失败");
     }
 
+    @PostMapping("")
     public ApiResult addCourse(@RequestBody JSONObject reqObject) {
 
         String title = (String)reqObject.get("title");
@@ -367,6 +388,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult registerGrade(@RequestBody JSONObject reqObject) {
         String courseID = (String) reqObject.get("courseID");
         String classID = (String) reqObject.get("classID");
@@ -386,6 +408,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult viewReflection(@RequestBody JSONObject reqObject) {
         String courseID = (String) reqObject.get("courseID");
         String classID = (String) reqObject.get("classID");
@@ -410,6 +433,7 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",reflectionInfoList);
     }
 
+    @PostMapping("")
     public ApiResult viewPractice(@RequestBody JSONObject reqObject) {
         String courseID = (String) reqObject.get("courseID");
         String classID = (String) reqObject.get("classID");
@@ -442,43 +466,43 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",practiceInfoList);
     }
 
-//    public ApiResult addQuestion(@RequestBody JSONObject reqObject){
-//
-//        String choiceQuestion = (String) reqObject.get("choiceQuestion");
-//        String choiceOption = (String) reqObject.get("choiceOption");
-//        int choiceDifficulty = (int) reqObject.get("choiceDifficulty");
-//        String choiceAnswer = (String) reqObject.get("choiceAnswer");
-//        String choiceAnalysis = (String) reqObject.get("choiceAnalysis");
-//        double choiceScore = (Double) reqObject.get("choiceScore");
-//
-//        ChoiceQuestionDao choiceQuestionDao = new ChoiceQuestionDaoImpl();
-//        int result = choiceQuestionDao.addQuestion(choiceQuestion,choiceOption,choiceDifficulty,choiceAnswer,choiceAnalysis,choiceScore);
-//        if(result == 1){
-//            resp.getWriter().write("添加成功");
-//        }else{
-//            resp.getWriter().write("添加失败");
-//        }
-//    }
+    @PostMapping("")
+    public ApiResult addQuestion(@RequestBody JSONObject reqObject){
 
-//    public ApiResult getQuestion(@RequestBody JSONObject reqObject) {
-//
-//        ChoiceQuestionDao choiceQuestionDao = new ChoiceQuestionDaoImpl();
-//        List<ChoiceQuestion> choiceQuestionList = choiceQuestionDao.getAllQuestions();
-//        if(choiceQuestionList == null){
-//            choiceQuestionList = new ArrayList<>();
-//        }
-//
-//        return ApiResultHandler.buildApiResult(200,"",choiceQuestionList);
-//    }
+        String choiceQuestion = (String) reqObject.get("choiceQuestion");
+        String choiceOption = (String) reqObject.get("choiceOption");
+        int choiceDifficulty = (int) reqObject.get("choiceDifficulty");
+        String choiceAnswer = (String) reqObject.get("choiceAnswer");
+        String choiceAnalysis = (String) reqObject.get("choiceAnalysis");
+        double choiceScore = (Double) reqObject.get("choiceScore");
 
-//    public ApiResult shutDownCourse(@RequestBody JSONObject reqObject) {
-//
-//        String courseID = (String) reqObject.get("courseID");
-//
-//        //关闭课程
-//        CourseDao courseDao = new CourseDaoImpl();
-//        int result= courseDao.UpdateFlagOfCourseByCourseID(courseID,-1);
-//        resp.getWriter().write("课程已关闭");
-//    }
+        choiceQuestionRepository.save(ChoiceQuestion.builder()
+                .choiceQuestion(choiceQuestion)
+                .choiceOption(choiceOption)
+                .choiceDifficulty(choiceDifficulty)
+                .choiceAnswer(choiceAnswer)
+                .choiceAnalysis(choiceAnalysis)
+                .choiceScore(choiceScore)
+                .build());
+        return ApiResultHandler.success("添加成功");
+    }
+
+    @PostMapping("")
+    public ApiResult getQuestion(@RequestBody JSONObject reqObject) {
+
+        List<ChoiceQuestion> choiceQuestionList = choiceQuestionRepository.findAll();
+
+        return ApiResultHandler.buildApiResult(200,"",choiceQuestionList);
+    }
+
+    @PostMapping("")
+    public ApiResult shutDownCourse(@RequestBody JSONObject reqObject) {
+
+        String courseID = (String) reqObject.get("courseID");
+
+        //关闭课程
+        int result= courseRepository.UpdateFlagOfCourseByCourseID(courseID,-1);
+        return ApiResultHandler.success("课程已关闭");
+    }
 
 }

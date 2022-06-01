@@ -1,6 +1,9 @@
 package com.tongji.software_management.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tongji.software_management.dao.AttendRepository;
+import com.tongji.software_management.dao.PracticeRepository;
+import com.tongji.software_management.dao.PracticeScoreRepository;
 import com.tongji.software_management.entity.DBEntity.*;
 import com.tongji.software_management.entity.LogicalEntity.ApiResult;
 import com.tongji.software_management.entity.LogicalEntity.ViewExperimentInfo;
@@ -9,6 +12,7 @@ import com.tongji.software_management.service.InstructorService;
 import com.tongji.software_management.service.StudentService;
 import com.tongji.software_management.utils.ApiResultHandler;
 import io.swagger.annotations.Api;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
@@ -25,7 +29,14 @@ public class StudentController {
     StudentService studentService;
     @Resource
     InstructorService instructorService;
+    @Resource
+    AttendRepository attendRepository;
+    @Resource
+    PracticeScoreRepository practiceScoreRepository;
+    @Resource
+    PracticeRepository practiceRepository;
 
+    @PostMapping("")
     public ApiResult viewExperiment(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -54,6 +65,7 @@ public class StudentController {
         return ApiResultHandler.buildApiResult(200,"",viewExperimentInfoList);
     }
 
+    @PostMapping("")
     public ApiResult getTakes(@RequestBody JSONObject reqObject) {
 
         String studentNumber = (String) reqObject.get("studentNumber");
@@ -66,6 +78,7 @@ public class StudentController {
         return ApiResultHandler.buildApiResult(200,"",takes);
     }
 
+    @PostMapping("")
     public ApiResult getCourseNotice(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -91,6 +104,7 @@ public class StudentController {
         return ApiResultHandler.buildApiResult(200,"",noticesInfo);
     }
 
+    @PostMapping("")
     public ApiResult getGrade(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -124,6 +138,7 @@ public class StudentController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    @PostMapping("")
     public ApiResult getDuty(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -135,40 +150,42 @@ public class StudentController {
 
         return ApiResultHandler.buildApiResult(200,"",map);
     }
-//    public ApiResult signIn(@RequestBody JSONObject reqObject) {
-//
-//        String courseID = (String) reqObject.get("courseID");
-//        String classID = (String) reqObject.get("classID");
-//        String title = (String) reqObject.get("AttendanceName");
-//        String studentNumber = (String) reqObject.get("studentNumber");
-//        //学生当前签到的时间
-//        Date currentTime = new Date();
-//        //考勤截止日期
-//        Date endTime = null;
-////        AttendDao attendDao = new AttendDaoImpl();
-//        Attend attend = attendDao.QueryAttendByCourseIDAndClassIDAndTitle(courseID,classID,title);
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        try {
-//            endTime = simpleDateFormat.parse(attend.getEndTime());
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        //比较两个时间
-//        int onTime = 0;
-//        if(currentTime.before(endTime)){
-//            onTime = 1;
-//        }
-//        //添加考勤记录
-//        Map<String,Object> map = new HashMap<>();
-//        if(studentService.addAttendScore(courseID,classID,title,studentNumber,onTime)==1){
-//            map.put("result",1);
-//        }else{
-//            map.put("result",0);
-//        }
-//        return ApiResultHandler.buildApiResult(200,"",map);
-//    }
-//
 
+    @PostMapping("")
+    public ApiResult signIn(@RequestBody JSONObject reqObject) {
+
+        String courseID = (String) reqObject.get("courseID");
+        String classID = (String) reqObject.get("classID");
+        String title = (String) reqObject.get("AttendanceName");
+        String studentNumber = (String) reqObject.get("studentNumber");
+        //学生当前签到的时间
+        Date currentTime = new Date();
+        //考勤截止日期
+        Date endTime = null;
+//        AttendDao attendDao = new AttendDaoImpl();
+        Attend attend = attendRepository.findAttendByCourseIdAndClassIdAndTitle(courseID,classID,title);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            endTime = simpleDateFormat.parse(attend.getEndTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //比较两个时间
+        int onTime = 0;
+        if(currentTime.before(endTime)){
+            onTime = 1;
+        }
+        //添加考勤记录
+        Map<String,Object> map = new HashMap<>();
+        if(studentService.addAttendScore(courseID,classID,title,studentNumber,onTime)==1){
+            map.put("result",1);
+        }else{
+            map.put("result",0);
+        }
+        return ApiResultHandler.buildApiResult(200,"",map);
+    }
+
+    @PostMapping("")
     public ApiResult getWeightOfGrade(@RequestBody JSONObject reqObject) {
 
         String courseId = (String) reqObject.get("courseID");
@@ -178,6 +195,7 @@ public class StudentController {
     }
 
     //学生获取自己的实验成绩 √
+    @PostMapping("")
     public ApiResult getExpGrades(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -199,7 +217,7 @@ public class StudentController {
     }
 
     //学生获取自己某门课程的总成绩
-
+    @PostMapping("")
     public ApiResult getTotalGrade(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -222,67 +240,66 @@ public class StudentController {
     }
 
     //学生查看自己参加的对抗练习的成绩
-//    public ApiResult viewPracticeStu(@RequestBody JSONObject reqObject) {
-//
-//        String courseID = (String) reqObject.get("courseID");
-//        String classID = (String) reqObject.get("classID");
-//        String studentNumber = (String) reqObject.get("studentNumber");
-//
-//        PracticeDao practiceDao = new PracticeDaoImpl();
-//        PracticeScoreDao practiceScoreDao = new PracticeScoreDaoImpl();
-//
-//        //需要返回的信息列表
-//        List<Map<String, Object>> practiceInfoList = new ArrayList<>();
-//
-//        //该班级发布的所有对抗练习
-//        List<Practice> practiceList = practiceDao.QueryPracticesByCourseIDAndClassID(courseID,classID);
-//
-//        //查找每一个对抗练习中该学生的小组排名，确定成绩
-//        for(Practice practice : practiceList){
-//            Map<String, Object> map = new HashMap<>();
-//            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            map.put("practiceName",practice.getPracticeName());
-//            map.put("startTime",dateFormat.format(practice.getStartTime()));
-//            map.put("endTime",dateFormat.format(practice.getEndTime()));
-//            //当前时间
-//            Timestamp now = new Timestamp(System.currentTimeMillis());
-//            if(now.before(practice.getEndTime())){
-//                map.put("status","正在进行");
-//            }else if(now.after(practice.getEndTime())){
-//                map.put("status","已结束");
-//            }else{
-//                map.put("status","尚未开始");
-//            }
-//
-//            float grade = 0;
-//            //该学生再本次对抗练习中的成绩信息
-//            PracticeScore practiceScore = practiceScoreDao.QueryPracticeScoreByCourseIDAndClassIDAndPracticeNameAndStudentNumber(courseID,classID,practice.getPracticeName(),studentNumber);
-//            if(practiceScore == null){
-//                //没有参加该次对抗练习，成绩为0
-//                map.put("grade",grade);
-//                practiceInfoList.add(map);
-//                continue;
-//            }
-//            //排序后的小组成员
-//            List<PracticeScore> practiceScoreList = practiceScoreDao.QueryPracticeScoreByGroup(courseID,classID,practice.getPracticeName(), practiceScore.getGroupNumber());
-//            //算成绩
-//            if(practiceScoreList != null){
-//                for(int i=0;i<practiceScoreList.size();i++){
-//                    if(practiceScoreList.get(i).getStudentNumber().equals(practiceScore.getStudentNumber())){
-//                        //找到所在的组的名次i(第一名100，第二名60，第三名20)
-//                        grade = ((3-i)*2-1)*20;
-//                        map.put("grade",grade);
-//                        practiceInfoList.add(map);
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//
-//        return ApiResultHandler.buildApiResult(200,"",practiceInfoList);
-//    }
+    @PostMapping("")
+    public ApiResult viewPracticeStu(@RequestBody JSONObject reqObject) {
+
+        String courseID = (String) reqObject.get("courseID");
+        String classID = (String) reqObject.get("classID");
+        String studentNumber = (String) reqObject.get("studentNumber");
+
+        //需要返回的信息列表
+        List<Map<String, Object>> practiceInfoList = new ArrayList<>();
+
+        //该班级发布的所有对抗练习
+        List<Practice> practiceList = practiceRepository.findPracticesByCourseIdAndClassId(courseID,classID);
+
+        //查找每一个对抗练习中该学生的小组排名，确定成绩
+        for(Practice practice : practiceList){
+            Map<String, Object> map = new HashMap<>();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            map.put("practiceName",practice.getPracticeName());
+            map.put("startTime",dateFormat.format(practice.getStartTime()));
+            map.put("endTime",dateFormat.format(practice.getEndTime()));
+            //当前时间
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            if(now.before(practice.getEndTime())){
+                map.put("status","正在进行");
+            }else if(now.after(practice.getEndTime())){
+                map.put("status","已结束");
+            }else{
+                map.put("status","尚未开始");
+            }
+
+            float grade = 0;
+            //该学生再本次对抗练习中的成绩信息
+            PracticeScore practiceScore = practiceScoreRepository.findPracticeScoreByCourseIdAndClassIdAndPracticeNameAndStudentNumber(courseID,classID,practice.getPracticeName(),studentNumber);
+            if(practiceScore == null){
+                //没有参加该次对抗练习，成绩为0
+                map.put("grade",grade);
+                practiceInfoList.add(map);
+                continue;
+            }
+            //排序后的小组成员
+            List<PracticeScore> practiceScoreList = practiceScoreRepository.findPracticeScoreByGroup(courseID,classID,practice.getPracticeName(), practiceScore.getGroupNumber());
+            //算成绩
+            if(practiceScoreList != null){
+                for(int i=0;i<practiceScoreList.size();i++){
+                    if(practiceScoreList.get(i).getStudentNumber().equals(practiceScore.getStudentNumber())){
+                        //找到所在的组的名次i(第一名100，第二名60，第三名20)
+                        grade = ((3-i)*2-1)*20;
+                        map.put("grade",grade);
+                        practiceInfoList.add(map);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return ApiResultHandler.buildApiResult(200,"",practiceInfoList);
+    }
 
     //学生写课程反馈
+    @PostMapping("")
     public ApiResult writeReflection(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");

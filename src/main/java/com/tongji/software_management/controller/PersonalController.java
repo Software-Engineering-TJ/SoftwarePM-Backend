@@ -30,6 +30,7 @@ public class PersonalController {
         return ApiResultHandler.buildApiResult(200,"",msg);
     }
 
+    @PostMapping("/")
     public ApiResult alterInstructorInformation(@RequestBody JSONObject req) {
         String instructorNumber = "1"; //主码
         String email = "11";
