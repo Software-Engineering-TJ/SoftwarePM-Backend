@@ -1,5 +1,6 @@
 package com.tongji.software_management.entity.DBEntity;
 
+import com.tongji.software_management.entity.LogicalEntity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -14,11 +15,11 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Student {
+public class Student extends User {
     private String studentNumber;
-    private String email;
-    private String password;
-    private String name;
+//    private String email;
+//    private String password;
+//    private String name;
     private int sex;
     private String phoneNumber;
     private int status;
@@ -104,5 +105,30 @@ public class Student {
     @Override
     public int hashCode() {
         return Objects.hash(studentNumber, email, password, name, sex, phoneNumber, status);
+    }
+
+    @Override
+    public String getUserNumber() {
+        return studentNumber;
+    }
+
+    public void setUserNumber(String userNumber){}
+
+    @Override
+    public String getInstructorNumber() {
+        return null;
+    }
+
+    @Override
+    public void setInstructorNumber(String phoneNumber) {
+    }
+
+    @Override
+    public String getAdminNumber() {
+        return null;
+    }
+
+    @Override
+    public void setAdminNumber(String adminNumber) {
     }
 }

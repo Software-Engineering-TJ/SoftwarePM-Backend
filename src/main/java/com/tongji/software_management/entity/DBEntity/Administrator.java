@@ -1,5 +1,6 @@
 package com.tongji.software_management.entity.DBEntity;
 
+import com.tongji.software_management.entity.LogicalEntity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -14,11 +15,11 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Administrator {
+public class Administrator extends User {
     private String adminNumber;
-    private String email;
-    private String password;
-    private String name;
+//    private String email;
+//    private String password;
+//    private String name;
 
     @Id
     @Column(name = "admin_number")
@@ -71,5 +72,63 @@ public class Administrator {
     @Override
     public int hashCode() {
         return Objects.hash(adminNumber, email, password, name);
+    }
+
+    @Override
+    public String getUserNumber() {
+        return adminNumber;
+    }
+
+    @Override
+    public void setUserNumber(String userNumber){}
+
+    @Override
+    public int getSex() {
+        return 1; //应该用不到，默认男
+    }
+
+    @Override
+    public void setSex(int sex) {
+
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return null;
+    }
+
+    @Override
+    public void setPhoneNumber(String phoneNumber) {
+
+    }
+
+    @Override
+    public int getStatus() {
+        return 1; //默认已经激活
+    }
+
+    @Override
+    public void setStatus(int status) {
+
+    }
+
+    @Override
+    public String getStudentNumber() {
+        return null;
+    }
+
+    @Override
+    public void setStudentNumber(String studentNumber) {
+
+    }
+
+    @Override
+    public String getInstructorNumber() {
+        return null;
+    }
+
+    @Override
+    public void setInstructorNumber(String phoneNumber) {
+
     }
 }

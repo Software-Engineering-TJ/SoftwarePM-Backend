@@ -1,10 +1,14 @@
 package com.tongji.software_management.entity.LogicalEntity;
 
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+
 public abstract class User {
     protected String email;
     protected String password;
     protected String name;
+
 
     public String getName() {
         return name;
@@ -29,9 +33,33 @@ public abstract class User {
     public void setPassword(String password) {
         this.password = password;
     }
-//
+
+    public abstract int getSex();
+
+    public abstract void setSex(int sex) ;
+
+    public abstract String getPhoneNumber();
+
+    public abstract void setPhoneNumber(String phoneNumber);
+
     public abstract int getStatus();
 
     public abstract void setStatus(int status);
+
+    public abstract String getStudentNumber();
+
+    public abstract void setStudentNumber(String studentNumber);
+
+    public abstract String getInstructorNumber();
+
+    public abstract void setInstructorNumber(String phoneNumber);
+
+    public abstract String getAdminNumber();
+
+    public abstract void setAdminNumber(String adminNumber) ;
+    //服务于UserServlet中的getUserInfo()
+    public abstract String getUserNumber();
+
+    public abstract void setUserNumber(String userNumber);
 }
 
