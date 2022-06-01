@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/admin")
 public class AdministratorController {
 
     @Resource
@@ -47,7 +47,7 @@ public class AdministratorController {
     @Resource
     private InstructorService instructorService;
 
-    @PostMapping("")
+    @PostMapping("/alterUserInformation")
     public ApiResult alterUserInformation(@RequestBody JSONObject reqObject) {
 
         String userNumber = (String) reqObject.get("userNumber");
@@ -70,7 +70,7 @@ public class AdministratorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
-    @PostMapping("")
+    @PostMapping("/getAdministrationInfo")
     public ApiResult getAdministrationInfo(@RequestBody JSONObject reqObject) {
 
         String adminNumber = (String) reqObject.get("adminNumber");
@@ -82,7 +82,7 @@ public class AdministratorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
-    @PostMapping("")
+    @PostMapping("/getStudentByStudentNumber")
     public ApiResult getStudentByStudentNumber(@RequestBody JSONObject reqObject) {
 
         String studentNumber = (String) reqObject.get("studentNumber");
@@ -95,7 +95,7 @@ public class AdministratorController {
     }
 
     //创建新的学生账号 √
-    @PostMapping("")
+    @PostMapping("/createStudent")
     public ApiResult createStudent(@RequestBody JSONObject reqObject) {
 
         String name = (String) reqObject.get("name");
@@ -117,7 +117,7 @@ public class AdministratorController {
     }
 
     //创建教师账号 √
-    @PostMapping("")
+    @PostMapping("/createTeacher")
     public ApiResult createTeacher(@RequestBody JSONObject reqObject) {
 
         String name = (String) reqObject.get("name");
@@ -139,7 +139,7 @@ public class AdministratorController {
     }
 
     //根据学生的学号获得他参与的课程信息 √
-    @PostMapping("")
+    @PostMapping("/getTakesByStudentNumber")
     public ApiResult getTakesByStudentNumber(@RequestBody JSONObject reqObject) {
 
         String studentNumber = (String) reqObject.get("studentNumber");
@@ -150,7 +150,7 @@ public class AdministratorController {
     }
 
     //根据老师的工号获得老师信息，用于搜索对应的老师 √
-    @PostMapping("")
+    @PostMapping("/getTeacherByTeacherNumber")
     public ApiResult getTeacherByTeacherNumber(@RequestBody JSONObject reqObject) {
 
         String instructorNumber = (String) reqObject.get("instructorNumber");
@@ -161,7 +161,7 @@ public class AdministratorController {
     }
 
     //根据教师工号获得教授的课程信息 √
-    @PostMapping("")
+    @PostMapping("/getTeachesByTeacherNumber")
     public ApiResult getTeachesByTeacherNumber(@RequestBody JSONObject reqObject) {
 
         String instructorNumber = (String) reqObject.get("instructorNumber");
@@ -171,7 +171,7 @@ public class AdministratorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
-    @PostMapping("")
+    @PostMapping("/changeStudentDuty")
     public ApiResult changeStudentDuty(@RequestBody JSONObject reqObject) {
 
         String studentNumber = (String) reqObject.get("studentNumber");
@@ -192,7 +192,7 @@ public class AdministratorController {
     }
 
     //修改某个课程下该教师的职务。（将普通老师改为责任教师）
-    @PostMapping("")
+    @PostMapping("/changeDutyInstructor")
     public ApiResult changeDutyInstructor(@RequestBody JSONObject reqObject) {
 
         //获取 哪个老师 想设置为 哪个课程 的责任教师
@@ -212,7 +212,7 @@ public class AdministratorController {
     }
 
     //查看某门课程下的责任教师
-    @PostMapping("")
+    @PostMapping("/checkTeacherDuty")
     public ApiResult checkTeacherDuty(@RequestBody JSONObject reqObject) {
         String courseID = (String) reqObject.get("courseID");
         //获取责任教师的工号和姓名
@@ -220,7 +220,7 @@ public class AdministratorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
-    @PostMapping("")
+    @PostMapping("/DeleteUser")
     public ApiResult DeleteUser(@RequestBody JSONObject reqObject) {
 
         String email = (String) reqObject.get("email");
@@ -322,7 +322,7 @@ public class AdministratorController {
 //    }
 
     //管理员查看需要审核的课程（责任教师申请的）
-    @PostMapping("")
+    @PostMapping("/getCourseApplied")
     public ApiResult getCourseApplied() {
 
         //等待审核的课程
@@ -348,8 +348,8 @@ public class AdministratorController {
     }
 
     //审核课程
-    @PostMapping("")
-    public void AuditCourse(@RequestBody JSONObject reqObject) {
+    @PostMapping("/AuditCourse")
+    public ApiResult AuditCourse(@RequestBody JSONObject reqObject) {
 
 
         String courseID = (String) reqObject.get("courseID");
@@ -357,11 +357,11 @@ public class AdministratorController {
         String result = (String) reqObject.get("result");
 
         administrationService.aduitCourse(courseID, result);
-
+        return ApiResultHandler.success("");
     }
 
     //获取所有学生信息
-    @PostMapping("")
+    @PostMapping("getStudentInfo")
     public ApiResult getStudentInfo(@RequestBody JSONObject reqObject) {
 
         List<Student> studentList = studentService.getAllStudents();
@@ -379,7 +379,7 @@ public class AdministratorController {
     }
 
     //获取所有老师信息
-    @PostMapping("")
+    @PostMapping("getTeacherInfo")
     public ApiResult getTeacherInfo(@RequestBody JSONObject reqObject) {
 
         List<Instructor> instructorList = instructorService.getAllInstructors();
