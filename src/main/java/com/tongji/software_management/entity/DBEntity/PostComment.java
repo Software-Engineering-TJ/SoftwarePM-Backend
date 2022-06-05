@@ -1,11 +1,15 @@
 package com.tongji.software_management.entity.DBEntity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+@DynamicInsert
+@DynamicUpdate
 @Entity
 @Table(name = "post_comment", schema = "education", catalog = "")
 public class PostComment {

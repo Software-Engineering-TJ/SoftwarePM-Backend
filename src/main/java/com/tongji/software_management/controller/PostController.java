@@ -1,10 +1,13 @@
 package com.tongji.software_management.controller;
 
+import com.tongji.software_management.entity.DBEntity.FavoritePost;
 import com.tongji.software_management.entity.DBEntity.Post;
 import com.tongji.software_management.entity.DBEntity.PostComment;
 import com.tongji.software_management.entity.LogicalEntity.ApiResult;
+import com.tongji.software_management.entity.LogicalEntity.FavoritePostDTO;
 import com.tongji.software_management.entity.LogicalEntity.PostCommentDTO;
 import com.tongji.software_management.entity.LogicalEntity.PostDTO;
+import com.tongji.software_management.service.FavoritePostService;
 import com.tongji.software_management.service.PostCommentService;
 import com.tongji.software_management.service.PostService;
 import com.tongji.software_management.utils.ApiResultHandler;
@@ -23,6 +26,9 @@ public class PostController {
 
     @Autowired
     PostCommentService postCommentService;
+
+    @Autowired
+    FavoritePostService favoritePostService;
 
     // post-增
     @PostMapping
@@ -112,5 +118,49 @@ public class PostController {
         map.put("postInfoList",postCommentInfoList);
 
         return ApiResultHandler.success(map);
+    }
+
+    // 收藏帖子
+    @PostMapping("favorite")
+    public ApiResult addFavorite(@RequestBody FavoritePost favoritePost){
+        int favoritePostId = favoritePostService.collectPost(favoritePost);
+        return ApiResultHandler.success(favoritePostId);
+    }
+
+    // 删除某个收藏
+    @DeleteMapping("favorite")
+    public ApiResult deleteFavorite(@RequestParam("favoriteId")int favoriteId){
+        favoritePostService.deleteById(favoriteId);
+        return ApiResultHandler.success(null);
+    }
+
+    // 分页获取收藏的帖子
+    @GetMapping("favorite/{pageNumber}/{pageSize}")
+    public ApiResult getFavoritePostList(@RequestParam("studentNumber")String studentNumber,
+                                         @PathVariable("pageNumber")int pageNumber,
+                                         @PathVariable("pageSize")int pageSize){
+        if(pageNumber<1){
+            return ApiResultHandler.fail("页号不合法");
+        }
+        if(pageSize<1){
+            return ApiResultHandler.fail("页大小不合法");
+        }
+
+        List<FavoritePostDTO> favoritePostInfoList = new ArrayList<>();
+        List<FavoritePost> favoritePostList = favoritePostService.findByStudentNumberAndLimit(studentNumber,pageNumber,pageSize);
+        for(FavoritePost favoritePost : favoritePostList){
+            FavoritePostDTO favoritePostInfo = favoritePostService.convertToFavoritePostDTO(favoritePost);
+            favoritePostInfoList.add(favoritePostInfo);
+        }
+
+        int count = favoritePostService.getCountOfFavoritePost(studentNumber);
+        int temp = count/pageSize;
+        int pageCount = (count%pageSize==0)?temp:temp+1;
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("pageCount",pageCount);
+        map.put("favoritePostInfoList",favoritePostInfoList);
+
+        return ApiResultHandler.success(favoritePostInfoList);
     }
 }
