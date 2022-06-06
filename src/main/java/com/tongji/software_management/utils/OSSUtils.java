@@ -5,6 +5,7 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.SimplifiedObjectMeta;
 import org.apache.commons.fileupload.FileItem;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,13 +31,15 @@ public class OSSUtils {
 
     public static String bucketName = "hjk-files";
 
+    public static String OSS_PATH = "https://"+bucketName+"."+endpoint+"/";
+
     /**
      * 上传文件到OSS
      * @param filePath 想要存储的文件路径
      * @param fileItem http传来的文件项
      * @return 文件存储对应的OSS外网访问路径
      */
-    public static String uploadFile(String filePath, FileItem fileItem){
+    public static String uploadFile(String filePath, MultipartFile fileItem){
         //创建客户端实例
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
         //获取文件流
@@ -51,12 +54,13 @@ public class OSSUtils {
             ossClient.putObject(bucketName,filePath,fileInputStream,meta);
         } catch (IOException e) {
             e.printStackTrace();
+            return "failed";
         }finally {
             //关闭客户端连接
             ossClient.shutdown();
         }
         //文件最终存储位置
-        return "https://"+bucketName+"."+endpoint+"/"+filePath;
+        return OSS_PATH+filePath;
     }
 
     /**
@@ -65,7 +69,7 @@ public class OSSUtils {
      */
     public static void deleteFile(String fileUrl){
         //获取文件在OSS中的路径
-        String filePath = fileUrl.replace("https://"+bucketName+"."+endpoint+"/","");
+        String filePath = fileUrl.replace(OSS_PATH,"");
         //创建客户端实例
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
         //删除文件
@@ -80,8 +84,13 @@ public class OSSUtils {
      * @return http协议中的某一个文件类型表述
      */
     public static String getFileType(String filename){
+        filename = filename.toLowerCase();
         if(filename.endsWith(".jpg")||filename.endsWith(".png")||(filename.endsWith("jpeg"))){
             return "image/jpg";
+        }else if(filename.endsWith(".mp4")){
+            return "video/mp4";
+        }else if(filename.endsWith(".mkv")){
+            return "video/x-matroska";
         }else if(filename.endsWith(".bmp")){
             return "image/bmp";
         }else if(filename.endsWith(".gif")){
@@ -97,7 +106,7 @@ public class OSSUtils {
         }else if(filename.endsWith(".xml")){
             return "text/xml";
         }
-        //其余一律视为为图片
+        //其余暂且一律视为为图片
         return "image/jpg";
     }
 
