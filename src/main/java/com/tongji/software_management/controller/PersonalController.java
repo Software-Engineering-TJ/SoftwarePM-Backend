@@ -19,7 +19,7 @@ public class PersonalController {
     @Resource
     protected UserService userService;
 
-    @PostMapping("/")
+    @PostMapping("/alterStudentInformation")
     public ApiResult alterStudentInformation(@RequestBody JSONObject req) {
         String studentNumber = (String) req.get("studentNumber"); //主码
         String email = (String) req.get("email");
@@ -30,7 +30,7 @@ public class PersonalController {
         return ApiResultHandler.buildApiResult(200,"",msg);
     }
 
-    @PostMapping("/")
+    @PostMapping("/alterInstructorInformation")
     public ApiResult alterInstructorInformation(@RequestBody JSONObject req) {
         String instructorNumber = "1"; //主码
         String email = "11";

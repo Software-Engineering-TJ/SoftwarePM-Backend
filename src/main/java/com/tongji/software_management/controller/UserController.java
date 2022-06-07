@@ -43,7 +43,7 @@ public class UserController {
     private CourseRepository courseRepository;
 
     //发送邮件 √
-    @PostMapping("")
+    @PostMapping("sendEmail")
     public ApiResult sendEmail(HttpServletRequest req, @RequestBody JSONObject jsonObject) {
 
         int msg=-1;
@@ -138,7 +138,7 @@ public class UserController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
-    @PostMapping("")
+    @PostMapping("getUserStatus")
     public ApiResult getUserStatus(HttpServletRequest req, @RequestBody JSONObject jsonObject) {
 
         String userNumber = jsonObject.getString("userNumber");
@@ -206,7 +206,7 @@ public class UserController {
 //        resp.addHeader("access-control-expose-headers", "REDIRECT,CONTEXTPATH");
 //    }
 
-    @PostMapping("")
+    @PostMapping("getUserInfo")
     public ApiResult getUserInfo(HttpServletRequest req, @RequestBody JSONObject jsonObject) {
         //先获取userNumber信息
         String userNumber = (String) req.getSession().getAttribute("userNumber");
@@ -221,7 +221,7 @@ public class UserController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
-    @PostMapping("")
+    @PostMapping("changeUserInfo")
     public ApiResult changeUserInfo(HttpServletRequest req, @RequestBody JSONObject jsonObject) {
 
         String userNumber = jsonObject.getString("userNumber");
@@ -238,7 +238,7 @@ public class UserController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
-    @PostMapping("")
+    @PostMapping("verify")
     public ApiResult verify(HttpServletRequest req, @RequestBody JSONObject jsonObject) {
 
         //获取用户输入的验证码
@@ -257,7 +257,7 @@ public class UserController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
-    @PostMapping("")
+    @PostMapping("changePassword")
     public ApiResult changePassword(HttpServletRequest req, @RequestBody JSONObject jsonObject) {
 
         String userNumber = jsonObject.getString("userNumber");
@@ -277,7 +277,7 @@ public class UserController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
-    @PostMapping("")
+    @PostMapping("getReportDesc")
     public ApiResult getReportDesc(@RequestBody JSONObject jsonObject) {
 
         String courseID = jsonObject.getString("courseID");
@@ -288,7 +288,7 @@ public class UserController {
         return ApiResultHandler.buildApiResult(200,"",expReportInfoList);
     }
 
-    @PostMapping("")
+    @PostMapping("getExpReport")
     public ApiResult getExpReport(@RequestBody JSONObject jsonObject) {
 
         String courseID = jsonObject.getString("courseID");
@@ -322,7 +322,7 @@ public class UserController {
         return ApiResultHandler.buildApiResult(200,"",fileInfoList);
     }
 
-    @PostMapping("")
+    @PostMapping("getReferenceMaterial")
     public ApiResult getReferenceMaterial(@RequestBody JSONObject jsonObject) {
 
         String courseID = jsonObject.getString("courseID");
@@ -353,7 +353,7 @@ public class UserController {
         return ApiResultHandler.buildApiResult(200,"",referenceInfoList);
     }
 
-    @PostMapping("")
+    @PostMapping("getClassInfo")
     public ApiResult getClassInfo(@RequestBody JSONObject jsonObject) {
 
         String courseID = jsonObject.getString("courseID");
@@ -363,7 +363,7 @@ public class UserController {
        return ApiResultHandler.buildApiResult(200,"",classInfo);
     }
 
-    @PostMapping("")
+    @PostMapping("getAttendanceInfo")
     public ApiResult getAttendanceInfo(@RequestBody JSONObject jsonObject) {
 
         String courseID = jsonObject.getString("courseID");
@@ -397,7 +397,7 @@ public class UserController {
         return ApiResultHandler.buildApiResult(200,"",attendanceList);
     }
 
-    @PostMapping("")
+    @PostMapping("getAttendanceInfoStu")
     public ApiResult getAttendanceInfoStu(@RequestBody JSONObject jsonObject) {
 
         String courseID = jsonObject.getString("courseID");
@@ -438,7 +438,7 @@ public class UserController {
         return ApiResultHandler.buildApiResult(200,"",attendanceList);
     }
 
-    @PostMapping("")
+    @PostMapping("getSchedule")
     public ApiResult getSchedule(HttpServletRequest req, @RequestBody JSONObject jsonObject) {
         HttpSession session = req.getSession();
 

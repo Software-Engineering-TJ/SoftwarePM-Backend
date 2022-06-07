@@ -36,7 +36,7 @@ public class StudentController {
     @Resource
     PracticeRepository practiceRepository;
 
-    @PostMapping("")
+    @PostMapping("viewExperiment")
     public ApiResult viewExperiment(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -65,7 +65,7 @@ public class StudentController {
         return ApiResultHandler.buildApiResult(200,"",viewExperimentInfoList);
     }
 
-    @PostMapping("")
+    @PostMapping("getTakes")
     public ApiResult getTakes(@RequestBody JSONObject reqObject) {
 
         String studentNumber = (String) reqObject.get("studentNumber");
@@ -78,7 +78,7 @@ public class StudentController {
         return ApiResultHandler.buildApiResult(200,"",takes);
     }
 
-    @PostMapping("")
+    @PostMapping("getCourseNotice")
     public ApiResult getCourseNotice(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -104,7 +104,7 @@ public class StudentController {
         return ApiResultHandler.buildApiResult(200,"",noticesInfo);
     }
 
-    @PostMapping("")
+    @PostMapping("getGrade")
     public ApiResult getGrade(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -138,7 +138,7 @@ public class StudentController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
-    @PostMapping("")
+    @PostMapping("getDuty")
     public ApiResult getDuty(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -151,7 +151,7 @@ public class StudentController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
-    @PostMapping("")
+    @PostMapping("signIn")
     public ApiResult signIn(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -185,7 +185,7 @@ public class StudentController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
-    @PostMapping("")
+    @PostMapping("getWeightOfGrade")
     public ApiResult getWeightOfGrade(@RequestBody JSONObject reqObject) {
 
         String courseId = (String) reqObject.get("courseID");
@@ -195,7 +195,7 @@ public class StudentController {
     }
 
     //学生获取自己的实验成绩 √
-    @PostMapping("")
+    @PostMapping("getExpGrades")
     public ApiResult getExpGrades(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -217,7 +217,7 @@ public class StudentController {
     }
 
     //学生获取自己某门课程的总成绩
-    @PostMapping("")
+    @PostMapping("getTotalGrade")
     public ApiResult getTotalGrade(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -240,7 +240,7 @@ public class StudentController {
     }
 
     //学生查看自己参加的对抗练习的成绩
-    @PostMapping("")
+    @PostMapping("viewPracticeStu")
     public ApiResult viewPracticeStu(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
@@ -299,7 +299,7 @@ public class StudentController {
     }
 
     //学生写课程反馈
-    @PostMapping("")
+    @PostMapping("writeReflection")
     public ApiResult writeReflection(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
