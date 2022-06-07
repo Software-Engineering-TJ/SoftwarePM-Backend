@@ -15,9 +15,7 @@ import com.tongji.software_management.service.StudentService;
 import com.tongji.software_management.service.UserService;
 import com.tongji.software_management.utils.ApiResultHandler;
 import com.tongji.software_management.utils.OSSUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.mail.*;
@@ -29,7 +27,9 @@ import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@RequestMapping("")
+@CrossOrigin
+@RestController
+@RequestMapping("user")
 public class UserController {
     @Resource
     private UserService userService;

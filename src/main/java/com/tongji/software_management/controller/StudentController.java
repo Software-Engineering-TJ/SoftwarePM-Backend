@@ -12,8 +12,7 @@ import com.tongji.software_management.service.InstructorService;
 import com.tongji.software_management.service.StudentService;
 import com.tongji.software_management.utils.ApiResultHandler;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
@@ -22,6 +21,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@CrossOrigin
+@RestController
+@RequestMapping("student")
 public class StudentController {
     @Resource
     AdministratorService administrationService;

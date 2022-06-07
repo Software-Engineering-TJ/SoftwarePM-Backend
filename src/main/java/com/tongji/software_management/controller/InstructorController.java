@@ -20,7 +20,7 @@ import java.util.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/")
+@RequestMapping("/instructor")
 public class InstructorController {
     @Resource
     InstructorService instructorService;

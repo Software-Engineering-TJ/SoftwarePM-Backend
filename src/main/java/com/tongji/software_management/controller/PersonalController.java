@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/")
+@RequestMapping("/personal")
 public class PersonalController {
     @Resource
     protected UserService userService;
