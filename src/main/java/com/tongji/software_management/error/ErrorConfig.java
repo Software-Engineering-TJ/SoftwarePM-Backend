@@ -1,4 +1,4 @@
-package com.tongji.software_management.entity.error;
+package com.tongji.software_management.error;
 
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.ErrorPageRegistrar;

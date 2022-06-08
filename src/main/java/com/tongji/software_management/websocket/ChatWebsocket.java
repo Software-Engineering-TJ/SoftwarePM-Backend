@@ -3,15 +3,15 @@ package com.tongji.software_management.websocket;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-//import com.tan.labbackend.entity.*;
-//import com.tan.labbackend.service.*;
-
-import com.tongji.software_management.entity.LogicalEntity.ChatMessage;
-import com.tongji.software_management.entity.LogicalEntity.GameMatchInfo;
-import com.tongji.software_management.entity.LogicalEntity.MessageReply;
-import com.tongji.software_management.entity.LogicalEntity.UserMatchInfo;
-import com.tongji.software_management.entity.error.GameServerError;
+import com.tongji.software_management.entity.DBEntity.ChoiceQuestion;
+import com.tongji.software_management.entity.DBEntity.Practice;
+import com.tongji.software_management.entity.DBEntity.PracticeScore;
+import com.tongji.software_management.entity.LogicalEntity.*;
+import com.tongji.software_management.error.GameServerError;
 import com.tongji.software_management.interceptor.GameServerException;
+import com.tongji.software_management.service.ChoiceQuestionService;
+import com.tongji.software_management.service.PracticeScoreService;
+import com.tongji.software_management.service.PracticeService;
 import com.tongji.software_management.utils.MatchCacheUtil;
 import com.tongji.software_management.utils.MessageCode;
 import com.tongji.software_management.utils.MessageTypeEnum;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-import java.time.Instant;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
@@ -39,34 +39,36 @@ public class ChatWebsocket {
 
     private Session session;
 
-    private String userId;
-    private String contestId;
+    private String userId; //对应student表中的student_number
+    private String contestId; //对应practice表中的practice_id
     static MatchCacheUtil matchCacheUtil;
     static Lock lock = new ReentrantLock();
-
     static Condition matchCond = lock.newCondition();
-//    static ExerciseService exerciseService;
-//    static ScoreService scoreService;
-//    static ProjectService projectService;
+
+    static PracticeService practiceService;
+    static ChoiceQuestionService choiceQuestionService;
+    static PracticeScoreService practiceScoreService;
+
+
     @Autowired
     public void setMatchCacheUtil(MatchCacheUtil matchCacheUtil) {
         ChatWebsocket.matchCacheUtil = matchCacheUtil;
     }
 
-//    @Autowired
-//    public void setExerciseService(ExerciseService exerciseService) {
-//        ChatWebsocket.exerciseService = exerciseService;
-//    }
-//
-//    @Autowired
-//    public void setScoreServiceService(ScoreService scoreService) {
-//        ChatWebsocket.scoreService = scoreService;
-//    }
-//
-//    @Autowired
-//    public void setProjectService(ProjectService projectService) {
-//        ChatWebsocket.projectService = projectService;
-//    }
+    @Autowired
+    public void setPracticeService(PracticeService practiceService) {
+        ChatWebsocket.practiceService = practiceService;
+    }
+
+    @Autowired
+    public void setChoiceQuestionService(ChoiceQuestionService choiceQuestionService) {
+        ChatWebsocket.choiceQuestionService = choiceQuestionService;
+    }
+
+    @Autowired
+    public void setPracticeScoreService(PracticeScoreService practiceScoreService) {
+        ChatWebsocket.practiceScoreService = practiceScoreService;
+    }
 
     @OnOpen
     public void onOpen(@PathParam("userId") String userId, Session session) {
@@ -114,11 +116,11 @@ public class ChatWebsocket {
 
         JSONObject jsonObject = JSON.parseObject(message);
 
-//        System.out.println(jsonObject);
+        System.out.println(jsonObject);
 
         MessageTypeEnum type = jsonObject.getObject("type", MessageTypeEnum.class);
 
-//        System.out.println(type.toString());
+        System.out.println(type.toString());
 
         log.info("ChatWebsocket onMessage userId: {}, 来自客户端的消息类型 type: {}", userId, type);
 
@@ -234,7 +236,7 @@ public class ChatWebsocket {
             boolean flag = true;
             String receiver = null;
             String receiver2 = null;
-            Integer i =0;
+            Integer i = 0;
             while (flag) {
                 // 获取除自己以外的其他待匹配用户
                 lock.lock();
@@ -309,12 +311,15 @@ public class ChatWebsocket {
             matchCacheUtil.setUserMatchInfo(receiver2, JSON.toJSONString(receiver2Info));
 
             GameMatchInfo gameMatchInfo = new GameMatchInfo();
-            // 获取题目(5道题）
-//            Project project = projectService.get(Integer.parseInt(cid));
-//
-//            List<Exercise> exercises = exerciseService.getQuestionsByCourseId(project.getCourse().getId(),5);
 
-//            gameMatchInfo.setExercises(exercises);
+            // 获取题目(5道题）
+            List<ChoiceQuestion> questions = new ArrayList<ChoiceQuestion>();
+            String[] choiceIdArray = practiceService.get(cid).getChoiceId().split(",");
+            for(String choiceId : choiceIdArray) {
+                questions.add(choiceQuestionService.get(Integer.parseInt(choiceId)));
+            }
+            gameMatchInfo.setQuestions(questions);
+
             gameMatchInfo.setSelfInfo(senderInfo);
             List<UserMatchInfo> opponentInfo =  new ArrayList<>();
             opponentInfo.add(receiverInfo);
@@ -438,7 +443,7 @@ public class ChatWebsocket {
         log.info("ChatWebsocket gameover 用户对局结束 userId: {}, message: {}", userId, jsonObject.toJSONString());
         // 保存完成时间和做题成绩到缓存中
         MessageReply<UserMatchInfo> messageReply = new MessageReply<>();
-        Instant finishTime = Instant.now();
+        Timestamp finishTime = new Timestamp(System.currentTimeMillis());
         Integer newScore = jsonObject.getInteger("data");
         UserMatchInfo userMatchInfo = new UserMatchInfo();
         userMatchInfo.setUserId(userId);
@@ -508,14 +513,19 @@ public class ChatWebsocket {
                 matchCacheUtil.removeUserFromRoom(userId);
                 matchCacheUtil.removeUserContestInfo(userId);
                 //保存得分
-//                for(UserMatchInfo u :userMatchInfos){
-//                    UserProject userProject= new UserProject();
-//                    userProject.setStudentId(Integer.valueOf(u.getUserId()));
-//                    userProject.setProjectId(Integer.valueOf(u.getContestId()));
-//                    userProject.setProjectGrade(u.getScore().doubleValue());
-//                    userProject.setSubmitTime(u.getTime());
-//                    scoreService.mark(userProject);
-//                }
+                for(UserMatchInfo u : userMatchInfos) {
+                    PracticeScore practiceScore = new PracticeScore();
+                    String pid = u.getContestId();
+                    Practice practice = practiceService.get(pid);
+                    practiceScore.setStudentNumber(u.getUserId());
+                    practiceScore.setPracticeName(practice.getPracticeName());
+                    practiceScore.setCourseId(practice.getCourseId());
+                    practiceScore.setClassId(practice.getClassId());
+                    practiceScore.setIndividualScore(u.getScore().doubleValue());
+                    practiceScore.setIndividualTime(u.getTime());
+                    practiceScoreService.insert(practiceScore);
+                }
+
             }
         }  finally {
             lock.unlock();

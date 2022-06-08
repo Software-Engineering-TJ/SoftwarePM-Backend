@@ -1,4 +1,4 @@
-package com.tongji.software_management.entity.error;
+package com.tongji.software_management.error;
 
 /**
  * <p>错误码定义的统一接口，用于统一管理服务中出现的错误码定义</p>

@@ -1,7 +1,7 @@
 package com.tongji.software_management.interceptor;
 
 
-import com.tongji.software_management.entity.error.GameServerError;
+import com.tongji.software_management.error.GameServerError;
 
 /**
  * @author yeeq

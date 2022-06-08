@@ -1,6 +1,7 @@
 package com.tongji.software_management.entity.LogicalEntity;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 
 
@@ -10,7 +11,7 @@ public class UserMatchInfo implements Comparable<UserMatchInfo>{
     private String userId;
     private String contestId;
     private Integer score;
-    private Instant time;
+    private Timestamp time;
 
     @Override
     public int compareTo(UserMatchInfo o){

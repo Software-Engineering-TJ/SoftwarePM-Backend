@@ -12,15 +12,22 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@IdClass(PracticePK.class)
 public class Practice {
+    private String practiceId;
     private String practiceName;
     private String courseId;
     private String classId;
     private Timestamp endTime;
     private Timestamp startTime;
+    private String choice_id;
 
     @Id
+    @Column(name = "practice_id")
+    public String getPracticeId() {return practiceId;}
+
+    public void setPracticeId(String practiceId) {this.practiceId = practiceId;}
+
+    @Basic
     @Column(name = "practice_name")
     public String getPracticeName() {
         return practiceName;
@@ -30,7 +37,7 @@ public class Practice {
         this.practiceName = practiceName;
     }
 
-    @Id
+    @Basic
     @Column(name = "course_id")
     public String getCourseId() {
         return courseId;
@@ -40,7 +47,7 @@ public class Practice {
         this.courseId = courseId;
     }
 
-    @Id
+    @Basic
     @Column(name = "class_id")
     public String getClassId() {
         return classId;
@@ -69,6 +76,12 @@ public class Practice {
     public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
+
+    @Basic
+    @Column(name = "choice_id")
+    public String getChoiceId() {return choice_id;}
+
+    public void setChoiceId(String choice_id) {this.choice_id = choice_id;}
 
     @Override
     public boolean equals(Object o) {
