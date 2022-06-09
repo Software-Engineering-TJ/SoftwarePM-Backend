@@ -1,6 +1,8 @@
 package com.tongji.software_management.dao;
 
 import com.tongji.software_management.entity.DBEntity.Instructor;
+import com.tongji.software_management.entity.LogicalEntity.DBInstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,9 +13,39 @@ import java.util.List;
 
 @Repository
 public interface InstructorRepository extends JpaRepository<Instructor, String> {
-    Instructor findInstructorByInstructorNumberAndPassword(String instructorNumber, String password);
-    Instructor findInstructorByEmail(String email);
-    Instructor findInstructorByInstructorNumber(String instructorNumber);
+    @Query("select new com.tongji.software_management.entity.LogicalEntity.DBInstructor" +
+            "(ins.instructorNumber,ins.email,ins.password,ins.name,ins.sex,ins.phoneNumber,ins.status) " +
+            "from Instructor ins where ins.instructorNumber = ?1 and ins.password=?2")
+    DBInstructor findDBInstructorByInstructorNumberAndPassword(String instructorNumber, String password);
+    default Instructor findInstructorByInstructorNumberAndPassword(String instructorNumber, String password){
+        Instructor instructor = new Instructor();
+        DBInstructor dbInstructor = findDBInstructorByInstructorNumberAndPassword(instructorNumber, password);
+        BeanUtils.copyProperties(dbInstructor,instructor);
+        return instructor;
+    }
+
+    @Query("select new com.tongji.software_management.entity.LogicalEntity.DBInstructor" +
+            "(ins.instructorNumber,ins.email,ins.password,ins.name,ins.sex,ins.phoneNumber,ins.status) " +
+            "from Instructor ins where ins.email = ?1")
+    DBInstructor findDBInstructorByEmail(String email);
+    default Instructor findInstructorByEmail(String email){
+        Instructor instructor = new Instructor();
+        DBInstructor dbInstructor = findDBInstructorByEmail(email);
+        BeanUtils.copyProperties(dbInstructor,instructor);
+        return instructor;
+    }
+
+    @Query("select new com.tongji.software_management.entity.LogicalEntity.DBInstructor" +
+            "(ins.instructorNumber,ins.email,ins.password,ins.name,ins.sex,ins.phoneNumber,ins.status) " +
+            "from Instructor ins where ins.instructorNumber = ?1")
+    DBInstructor findDBInstructorByInstructorNumber(String instructorNumber);
+    default Instructor findInstructorByInstructorNumber(String instructorNumber){
+        Instructor instructor = new Instructor();
+        DBInstructor dbInstructor = findDBInstructorByInstructorNumber(instructorNumber);
+        BeanUtils.copyProperties(dbInstructor,instructor);
+        return instructor;
+    }
+
     int deleteInstructorByEmail(String email);
 
     @Transactional
