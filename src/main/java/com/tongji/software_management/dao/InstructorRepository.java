@@ -20,8 +20,11 @@ public interface InstructorRepository extends JpaRepository<Instructor, String> 
     default Instructor findInstructorByInstructorNumberAndPassword(String instructorNumber, String password){
         Instructor instructor = new Instructor();
         DBInstructor dbInstructor = findDBInstructorByInstructorNumberAndPassword(instructorNumber, password);
-        BeanUtils.copyProperties(dbInstructor,instructor);
-        return instructor;
+        if(dbInstructor!=null){
+            BeanUtils.copyProperties(dbInstructor,instructor);
+            return instructor;
+        }
+        return null;
     }
 
     @Query("select new com.tongji.software_management.entity.LogicalEntity.DBInstructor" +
@@ -31,8 +34,11 @@ public interface InstructorRepository extends JpaRepository<Instructor, String> 
     default Instructor findInstructorByEmail(String email){
         Instructor instructor = new Instructor();
         DBInstructor dbInstructor = findDBInstructorByEmail(email);
-        BeanUtils.copyProperties(dbInstructor,instructor);
-        return instructor;
+        if(dbInstructor!=null){
+            BeanUtils.copyProperties(dbInstructor,instructor);
+            return instructor;
+        }
+        return null;
     }
 
     @Query("select new com.tongji.software_management.entity.LogicalEntity.DBInstructor" +
@@ -42,8 +48,11 @@ public interface InstructorRepository extends JpaRepository<Instructor, String> 
     default Instructor findInstructorByInstructorNumber(String instructorNumber){
         Instructor instructor = new Instructor();
         DBInstructor dbInstructor = findDBInstructorByInstructorNumber(instructorNumber);
-        BeanUtils.copyProperties(dbInstructor,instructor);
-        return instructor;
+        if(dbInstructor!=null){
+            BeanUtils.copyProperties(dbInstructor,instructor);
+            return instructor;
+        }
+        return null;
     }
 
     int deleteInstructorByEmail(String email);

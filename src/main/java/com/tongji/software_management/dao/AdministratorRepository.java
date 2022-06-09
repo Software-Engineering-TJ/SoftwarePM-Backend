@@ -20,8 +20,11 @@ public interface AdministratorRepository extends JpaRepository<Administrator, St
    default Administrator findAdministratorByAdminNumber(String adminNumber){
       DBAdministrator dbAdministrator = findDBAdministratorByAdminNumber(adminNumber);
       Administrator administrator = new Administrator();
-      BeanUtils.copyProperties(administrator,dbAdministrator);
-      return administrator;
+      if(dbAdministrator!=null){
+         BeanUtils.copyProperties(administrator,dbAdministrator);
+         return administrator;
+      }
+      return null;
    }
 
    @Query("select new com.tongji.software_management.entity.LogicalEntity.DBAdministrator" +
@@ -31,8 +34,11 @@ public interface AdministratorRepository extends JpaRepository<Administrator, St
    default Administrator findAdministratorByAdminNumberAndPassword(String adminNumber, String password){
       DBAdministrator dbAdministrator = findDBAdministratorByAdminNumberAndPassword(adminNumber, password);
       Administrator administrator = new Administrator();
-      BeanUtils.copyProperties(administrator,dbAdministrator);
-      return administrator;
+      if(dbAdministrator!=null){
+         BeanUtils.copyProperties(administrator,dbAdministrator);
+         return administrator;
+      }
+      return null;
    }
 
    @Query("select new com.tongji.software_management.entity.LogicalEntity.DBAdministrator" +
@@ -42,8 +48,11 @@ public interface AdministratorRepository extends JpaRepository<Administrator, St
    default Administrator findAdministratorByEmail(String email){
       DBAdministrator dbAdministrator = findDBAdministratorByEmail(email);
       Administrator administrator = new Administrator();
-      BeanUtils.copyProperties(administrator,dbAdministrator);
-      return administrator;
+      if(dbAdministrator!=null){
+         BeanUtils.copyProperties(administrator,dbAdministrator);
+         return administrator;
+      }
+      return null;
    }
 
    int deleteAdministratorByEmail(String email);

@@ -32,8 +32,11 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     default Student findStudentByEmail(String email){
         Student student = new Student();
         DBStudent dbStudent = findDBStudentByStudentNumber(email);
-        BeanUtils.copyProperties(dbStudent,student);
-        return student;
+        if(dbStudent!=null){
+            BeanUtils.copyProperties(dbStudent,student);
+            return student;
+        }
+        return null;
     }
 
     @Query("select new com.tongji.software_management.entity.LogicalEntity.DBStudent" +
@@ -43,8 +46,11 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     default Student findStudentByStudentNumber(String studentNumber){
         Student student = new Student();
         DBStudent dbStudent = findDBStudentByStudentNumber(studentNumber);
-        BeanUtils.copyProperties(dbStudent,student);
-        return student;
+        if(dbStudent!=null){
+            BeanUtils.copyProperties(dbStudent,student);
+            return student;
+        }
+        return null;
     }
 
     int deleteStudentByEmail(String email);
