@@ -172,13 +172,14 @@ public class UserController {
     }
 
     @GetMapping("login")
-    public ApiResult login(HttpSession session,
+    public ApiResult login(HttpServletRequest request,
                            @RequestParam("userNumber")String userNumber,
                            @RequestParam(value = "identify",required = false)String identify){
 
         //获取需要登录的用户对象，用于判断身份
         User user = userService.ifActivated(userNumber);
         //将userNumber信息加入到session,方便后续直接获取用户信息
+        HttpSession session = request.getSession();
         session.setAttribute("userNumber", userNumber);
         //转到登录成功后的界面
         HashMap<String, String> map = new HashMap<>();
