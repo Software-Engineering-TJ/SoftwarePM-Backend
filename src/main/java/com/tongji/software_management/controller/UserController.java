@@ -15,6 +15,7 @@ import com.tongji.software_management.service.StudentService;
 import com.tongji.software_management.service.UserService;
 import com.tongji.software_management.utils.ApiResultHandler;
 import com.tongji.software_management.utils.OSSUtils;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Api(tags="用户模块")
 @CrossOrigin
 @RestController
 @RequestMapping("user")
