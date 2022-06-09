@@ -8,6 +8,7 @@ import com.tongji.software_management.entity.LogicalEntity.ApiResult;
 import com.tongji.software_management.entity.LogicalEntity.StudentAttendanceInfo;
 import com.tongji.software_management.service.AdministratorService;
 import com.tongji.software_management.service.InstructorService;
+import com.tongji.software_management.service.PracticeService;
 import com.tongji.software_management.utils.ApiResultHandler;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,8 @@ public class InstructorController {
     ChoiceQuestionRepository choiceQuestionRepository;
     @Resource
     CourseRepository courseRepository;
+    @Resource
+    PracticeService practiceService;
 
     //获取该考勤已经签到和未签到的学生，要做表的not in操作
     @PostMapping("viewAttendance")
@@ -466,6 +469,25 @@ public class InstructorController {
 
         return ApiResultHandler.buildApiResult(200,"",practiceInfoList);
     }
+
+    @PostMapping("publishPractice")
+    public ApiResult publishPractice(@RequestBody JSONObject jsonObject) {
+        String practiceName = jsonObject.getString("practiceName");
+        String courseID = jsonObject.getString("courseID");
+        String classID = jsonObject.getString("classID");
+        String startTime = jsonObject.getString("startTime");
+        String endTime = jsonObject.getString("endTime");
+        Practice practice = new Practice();
+        practice.setPracticeName(practiceName);
+        practice.setClassId(classID);
+        practice.setCourseId(courseID);
+        practice.setStartTime(Timestamp.valueOf(startTime));
+        practice.setEndTime(Timestamp.valueOf(endTime));
+        practice.setChoiceId("1,2,3,4,5");
+        practiceService.add(practice);
+        return ApiResultHandler.success(null);
+    }
+
 
     @PostMapping("addQuestion")
     public ApiResult addQuestion(@RequestBody JSONObject reqObject){

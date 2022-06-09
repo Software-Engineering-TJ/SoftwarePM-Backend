@@ -15,5 +15,10 @@ public class PracticeService {
         return practiceRepository.findByPracticeId(practiceId);
     }
 
+    public void add(Practice practice) {
+        practiceRepository.save(practice);
+    }
+
+
 
 }

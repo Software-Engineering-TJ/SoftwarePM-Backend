@@ -13,7 +13,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity
 public class Practice {
-    private String practiceId;
+    private int practiceId;
     private String practiceName;
     private String courseId;
     private String classId;
@@ -23,9 +23,9 @@ public class Practice {
 
     @Id
     @Column(name = "practice_id")
-    public String getPracticeId() {return practiceId;}
+    public int getPracticeId() {return practiceId;}
 
-    public void setPracticeId(String practiceId) {this.practiceId = practiceId;}
+    public void setPracticeId(int practiceId) {this.practiceId = practiceId;}
 
     @Basic
     @Column(name = "practice_name")
