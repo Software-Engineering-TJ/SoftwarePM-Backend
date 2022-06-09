@@ -1,6 +1,8 @@
 package com.tongji.software_management.dao;
 
 import com.tongji.software_management.entity.DBEntity.Student;
+import com.tongji.software_management.entity.LogicalEntity.DBStudent;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,8 +24,29 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     int updateStudent(String studentNumber, String email, String phoneNumber);
 
     Student findStudentByStudentNumberAndPassword(String studentNumber, String password);
-    Student findStudentByEmail(String email);
-    Student findStudentByStudentNumber(String studentNumber);
+
+    @Query("select new com.tongji.software_management.entity.LogicalEntity.DBStudent" +
+            "(s.studentNumber,s.email,s.password,s.name,s.sex,s.phoneNumber,s.status) " +
+            "from Student s where s.email = ?1")
+    DBStudent findDBStudentByEmail(String email);
+    default Student findStudentByEmail(String email){
+        Student student = new Student();
+        DBStudent dbStudent = findDBStudentByStudentNumber(email);
+        BeanUtils.copyProperties(dbStudent,student);
+        return student;
+    }
+
+    @Query("select new com.tongji.software_management.entity.LogicalEntity.DBStudent" +
+            "(s.studentNumber,s.email,s.password,s.name,s.sex,s.phoneNumber,s.status) " +
+            "from Student s where s.studentNumber = ?1")
+    DBStudent findDBStudentByStudentNumber(String studentNumber);
+    default Student findStudentByStudentNumber(String studentNumber){
+        Student student = new Student();
+        DBStudent dbStudent = findDBStudentByStudentNumber(studentNumber);
+        BeanUtils.copyProperties(dbStudent,student);
+        return student;
+    }
+
     int deleteStudentByEmail(String email);
 
     @Transactional

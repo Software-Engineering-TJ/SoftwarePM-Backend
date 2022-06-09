@@ -9,12 +9,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 class SoftwareManagementApplicationTests {
 //
 //    @Autowired
-//    AdministratorRepository a;
+//    StudentRepository studentRepository;
 
 //    @Test
-//    void contextLoads() {
-//        System.out.println("hello");
-//        a.UpdatePasswordByAdminNumber("1","111111");
+//    public void test(){
+//        Student student = studentRepository.findStudentByStudentNumber("1");
+//        System.out.println(student.toString());
 //    }
+
 
 }
