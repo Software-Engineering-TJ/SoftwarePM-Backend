@@ -52,6 +52,7 @@ public class StudentService {
                     .classId(classID)
                     .expname(expname)
                     .studentNumber(studentNumber)
+                    .fileUrl(fileUrl)
                     .build());
             return 1; //每次插入一行，这里应该是返回1吧
         }
