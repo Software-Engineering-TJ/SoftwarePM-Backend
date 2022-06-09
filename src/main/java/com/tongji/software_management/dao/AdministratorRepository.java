@@ -24,7 +24,16 @@ public interface AdministratorRepository extends JpaRepository<Administrator, St
       return administrator;
    }
 
-   Administrator findAdministratorByAdminNumberAndPassword(String adminNumber, String password);
+   @Query("select new com.tongji.software_management.entity.LogicalEntity.DBAdministrator" +
+           "(a.adminNumber,a.email,a.password,a.name) " +
+           "from Administrator a where a.adminNumber = ?1 and a.password=?2")
+   DBAdministrator findDBAdministratorByAdminNumberAndPassword(String adminNumber, String password);
+   default Administrator findAdministratorByAdminNumberAndPassword(String adminNumber, String password){
+      DBAdministrator dbAdministrator = findDBAdministratorByAdminNumberAndPassword(adminNumber, password);
+      Administrator administrator = new Administrator();
+      BeanUtils.copyProperties(administrator,dbAdministrator);
+      return administrator;
+   }
 
    @Query("select new com.tongji.software_management.entity.LogicalEntity.DBAdministrator" +
            "(a.adminNumber,a.email,a.password,a.name) " +
