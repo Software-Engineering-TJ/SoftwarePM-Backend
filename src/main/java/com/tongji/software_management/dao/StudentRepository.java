@@ -23,7 +23,20 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     @Query("update Student set email =?2, phoneNumber =?3 where studentNumber =?1")
     int updateStudent(String studentNumber, String email, String phoneNumber);
 
-    Student findStudentByStudentNumberAndPassword(String studentNumber, String password);
+    @Query("select new com.tongji.software_management.entity.LogicalEntity.DBStudent" +
+            "(s.studentNumber,s.email,s.password,s.name,s.sex,s.phoneNumber,s.status) " +
+            "from Student s where s.studentNumber = ?1 and s.password=?2")
+    DBStudent findDBStudentByStudentNumberAndPassword(String studentNumber, String password);
+    default Student findStudentByStudentNumberAndPassword(String studentNumber, String password){
+        Student student = new Student();
+        DBStudent dbStudent = findDBStudentByStudentNumberAndPassword(studentNumber, password);
+        if(dbStudent!=null){
+            BeanUtils.copyProperties(dbStudent,student);
+            return student;
+        }
+        return null;
+    }
+
 
     @Query("select new com.tongji.software_management.entity.LogicalEntity.DBStudent" +
             "(s.studentNumber,s.email,s.password,s.name,s.sex,s.phoneNumber,s.status) " +

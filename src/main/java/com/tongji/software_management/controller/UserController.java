@@ -204,8 +204,8 @@ public class UserController {
         return ApiResultHandler.success(map);
     }
 
-    @PostMapping("getUserInfo")
-    public ApiResult getUserInfo(HttpServletRequest req, @RequestBody JSONObject jsonObject) {
+    @GetMapping("getUserInfo")
+    public ApiResult getUserInfo(HttpServletRequest req) {
         //先获取userNumber信息
         String userNumber = (String) req.getSession().getAttribute("userNumber");
         //从数据库获取用户信息
