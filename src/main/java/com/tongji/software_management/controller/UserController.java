@@ -206,9 +206,10 @@ public class UserController {
     }
 
     @GetMapping("getUserInfo")
-    public ApiResult getUserInfo(HttpServletRequest req) {
+    public ApiResult getUserInfo(HttpServletRequest req,
+                                 @RequestParam("userNumber")String userNumber) {
         //先获取userNumber信息
-        String userNumber = (String) req.getSession().getAttribute("userNumber");
+//        String userNumber = (String) req.getSession().getAttribute("userNumber");
         //从数据库获取用户信息
         User user = userService.ifActivated(userNumber);
         Map<String, String> map = new HashMap<>();
