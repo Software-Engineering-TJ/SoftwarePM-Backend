@@ -7,13 +7,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class SoftwareManagementApplicationTests {
+//
+//    @Autowired
+//    StudentRepository studentRepository;
 
-    @Autowired
-    AdministratorRepository a;
+//    @Test
+//    public void test(){
+//        Student student = studentRepository.findStudentByStudentNumber("1");
+//        System.out.println(student.toString());
+//    }
 
-    @Test
-    void contextLoads() {
-        a.UpdatePasswordByAdminNumber("1","111111");
-    }
 
 }

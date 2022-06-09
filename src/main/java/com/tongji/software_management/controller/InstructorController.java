@@ -18,6 +18,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Api(tags="教师模块")
 @CrossOrigin
 @RestController
 @RequestMapping("/instructor")

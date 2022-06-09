@@ -12,6 +12,7 @@ import com.tongji.software_management.service.InstructorService;
 import com.tongji.software_management.service.StudentService;
 import com.tongji.software_management.service.UserService;
 import com.tongji.software_management.utils.ApiResultHandler;
+import io.swagger.annotations.Api;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -32,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 
+@Api(tags="管理员模块")
 @CrossOrigin
 @RestController
 @RequestMapping("/admin")

@@ -11,6 +11,7 @@ import com.tongji.software_management.service.FavoritePostService;
 import com.tongji.software_management.service.PostCommentService;
 import com.tongji.software_management.service.PostService;
 import com.tongji.software_management.utils.ApiResultHandler;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Api(tags="新增的\"在线讨论\"模块")
 @CrossOrigin
 @RestController
 @RequestMapping("post")

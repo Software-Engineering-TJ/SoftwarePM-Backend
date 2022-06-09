@@ -15,6 +15,7 @@ import com.tongji.software_management.service.StudentService;
 import com.tongji.software_management.service.UserService;
 import com.tongji.software_management.utils.ApiResultHandler;
 import com.tongji.software_management.utils.OSSUtils;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Api(tags="用户模块")
 @CrossOrigin
 @RestController
 @RequestMapping("user")
@@ -169,45 +171,41 @@ public class UserController {
         return ApiResultHandler.buildApiResult(200,"",userInformation);
     }
 
-//    public ApiResult login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//
-//        String reqJson = RequestJsonUtils.getJson(req);
-//        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
-//        }.getType());
-//
-//        String userNumber = reqObject.get("userNumber");
-//        //获取需要登录的用户对象，用于判断身份
-//        User user = userService.ifActivated(userNumber);
-//        //将userNumber信息加入到session,方便后续直接获取用户信息
-//        HttpSession session = req.getSession();
-//        session.setAttribute("userNumber", userNumber);
-//        //转到登录成功后的界面
-//        resp.addHeader("REDIRECT", "REDIRECT");//告诉ajax这是重定向
-//        if (user instanceof Student) {
-//            //标明身份
-//            session.setAttribute("identity", "student");
-//            //学生页面
-//            resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/student/sIndex.html");//重定向地址
-//        } else if (user instanceof Instructor) {
-//            session.setAttribute("identity", "instructor");
-//            //教师页面
-//            resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/teacher/tIndex.html");//重定向地址
-//        } else {
-//            session.setAttribute("identity", "administrator");
-//            //管理员页面
-//            resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/administrator/aIndex.html");//重定向地址
-//        }
-//        //激活账户
-//        if (reqObject.get("identify") != null && !reqObject.get("identify").equals("")) {
-//            //如果首次激活，则将数据库用户激活状态设置为“1”
-//            userService.activateAccount((String) session.getAttribute("identity"), user.getEmail());
-//        }
-//        resp.setHeader("Access-Control-Allow-Origin", "*");
-//        resp.addHeader("access-control-expose-headers", "REDIRECT,CONTEXTPATH");
-//    }
+    @GetMapping("login")
+    public ApiResult login(HttpSession session,
+                           @RequestParam("userNumber")String userNumber,
+                           @RequestParam(value = "identify",required = false)String identify){
 
-    @PostMapping("getUserInfo")
-    public ApiResult getUserInfo(HttpServletRequest req, @RequestBody JSONObject jsonObject) {
+        //获取需要登录的用户对象，用于判断身份
+        User user = userService.ifActivated(userNumber);
+        //将userNumber信息加入到session,方便后续直接获取用户信息
+        session.setAttribute("userNumber", userNumber);
+        //转到登录成功后的界面
+        HashMap<String, String> map = new HashMap<>();
+        if (user instanceof Student) {
+            //标明身份
+            session.setAttribute("identity", "student");
+            //学生页面
+            map.put("identity", "student");
+        } else if (user instanceof Instructor) {
+            session.setAttribute("identity", "instructor");
+            //教师页面
+            map.put("identity", "instructor");
+        } else {
+            session.setAttribute("identity", "administrator");
+            //管理员页面
+            map.put("identity","administrator");
+        }
+        //激活账户
+        if (identify != null && !identify.equals("")) {
+            //如果首次激活，则将数据库用户激活状态设置为“1”
+            userService.activateAccount((String) session.getAttribute("identity"), user.getEmail());
+        }
+        return ApiResultHandler.success(map);
+    }
+
+    @GetMapping("getUserInfo")
+    public ApiResult getUserInfo(HttpServletRequest req) {
         //先获取userNumber信息
         String userNumber = (String) req.getSession().getAttribute("userNumber");
         //从数据库获取用户信息

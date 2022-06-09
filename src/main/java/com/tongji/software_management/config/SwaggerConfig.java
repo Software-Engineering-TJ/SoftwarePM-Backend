@@ -40,9 +40,9 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("软管项目restful风格接口文档")
                 .description("供项目小组成员观看")
-                .contact(new Contact("HJK","",""))
+                .contact(new Contact("HJK, LZA","",""))
                 .version("1.0")
-                .termsOfServiceUrl("http://localhost:8081/doc.html")     //网站地址
+                .termsOfServiceUrl("http://localhost:8443/doc.html")     //网站地址
                 .build();
     }
 }

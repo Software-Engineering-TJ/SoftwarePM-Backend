@@ -52,7 +52,7 @@ public abstract class User {
 
     public abstract String getInstructorNumber();
 
-    public abstract void setInstructorNumber(String phoneNumber);
+    public abstract void setInstructorNumber(String instructorNumber);
 
     public abstract String getAdminNumber();
 

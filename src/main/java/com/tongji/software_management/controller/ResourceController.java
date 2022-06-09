@@ -6,6 +6,7 @@ import com.tongji.software_management.entity.LogicalEntity.ResourceDTO;
 import com.tongji.software_management.service.ResourceService;
 import com.tongji.software_management.utils.ApiResultHandler;
 import com.tongji.software_management.utils.OSSUtils;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Api(tags="新增的\"多模式教学\"模块")
 @CrossOrigin
 @RestController
 @RequestMapping("resource")

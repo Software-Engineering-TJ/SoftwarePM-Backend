@@ -4,6 +4,8 @@ import com.tongji.software_management.entity.LogicalEntity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -12,6 +14,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@DynamicInsert
+@DynamicUpdate
 public class Student extends User {
     private String studentNumber;
 //    private String email;
@@ -117,12 +121,12 @@ public class Student extends User {
     }
 
     @Override
-    public void setInstructorNumber(String phoneNumber) {
+    public String getAdminNumber() {
+        return null;
     }
 
     @Override
-    public String getAdminNumber() {
-        return null;
+    public void setInstructorNumber(String phoneNumber) {
     }
 
     @Override

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
+@Api(tags="对抗练习模块")
 @CrossOrigin
 @RestController
 @RequestMapping("/personal")
