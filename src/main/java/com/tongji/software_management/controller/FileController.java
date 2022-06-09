@@ -113,4 +113,16 @@ public class FileController {
         outputStream.close();
         ossClient.shutdown();
     }
+
+    /**
+     * 删除文件
+     */
+    public ApiResult deleteFile(@RequestParam("fileUrl")String fileUrl){
+        //删除OSS中的文件
+        OSSUtils.deleteFile(fileUrl);
+        //删除文件在数据库中的记录,为了方便可以直接在expscore和reference两张表都执行删除操作
+        instructorService.deleteReference(fileUrl);
+        studentService.deleteCommit(fileUrl);
+        return ApiResultHandler.success(null);
+    }
 }
