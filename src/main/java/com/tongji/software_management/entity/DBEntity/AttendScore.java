@@ -61,7 +61,7 @@ public class AttendScore {
     }
 
     @Basic
-    @Column(name = "onTime")
+    @Column(name = "on_time")
     public int getOnTime() {
         return onTime;
     }

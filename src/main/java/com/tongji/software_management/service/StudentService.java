@@ -211,17 +211,18 @@ public class StudentService {
                 continue;
             }
             //排序后的小组成员
-            List<PracticeScore> practiceScoreList = practiceScoreRepository.findPracticeScoreByGroup(courseID,classID,practice.getPracticeName(),practiceScore.getGroupNumber());
+//            List<PracticeScore> practiceScoreList = practiceScoreRepository.findPracticeScoreByGroup(courseID,classID,practice.getPracticeName(),practiceScore.getGroupNumber());
             //算成绩
-            if(practiceScoreList != null){
-                for(int i=0;i<practiceScoreList.size();i++){
-                    if(practiceScoreList.get(i).getStudentNumber().equals(practiceScore.getStudentNumber())){
-                        //找到所在的组的名次i(第一名100，第二名60，第三名20)
-                        sumScore += ((3-i)*2-1)*20;
-                        break;
-                    }
-                }
-            }
+//            if(practiceScoreList != null){
+//                for(int i=0;i<practiceScoreList.size();i++){
+//                    if(practiceScoreList.get(i).getStudentNumber().equals(practiceScore.getStudentNumber())){
+//                        //找到所在的组的名次i(第一名100，第二名60，第三名20)
+//                        sumScore += ((3-i)*2-1)*20;
+//                        break;
+//                    }
+//                }
+//            }
+            sumScore += practiceScore.getIndividualScore();
         }
 
         return sumScore/practiceList.size()*percent/100;

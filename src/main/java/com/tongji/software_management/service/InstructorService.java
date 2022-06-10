@@ -166,7 +166,7 @@ public class InstructorService {
                 .courseId(courseID)
                 .classId(classID)
                 .expname(expname)
-                .reportInfo(reportInfo)
+                .reportName(reportName)
                 .reportInfo(reportInfo)
                 .startDate(startDate)
                 .endDate(endDate)

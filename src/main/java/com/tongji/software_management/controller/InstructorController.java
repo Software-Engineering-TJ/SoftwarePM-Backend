@@ -190,18 +190,19 @@ public class InstructorController {
         return ApiResultHandler.buildApiResult(200,"",map);
     }
 
+    // 教师发布实验报告描述
     @PostMapping("releaseReportDesc")
     public ApiResult releaseReportDesc(@RequestBody JSONObject reqObject) {
 
         String courseID = (String) reqObject.get("courseID");
         String classID = (String) reqObject.get("classID");
         String expname = (String) reqObject.get("expName");
-        Map<String,String> reportInfo = (Map<String, String>) reqObject.get("reportInfo");
-        String reportName = reportInfo.get("reportName");
-        String reportDescription = reportInfo.get("reportDescription");
-        String startDate = reportInfo.get("startDate");
-        String endDate = reportInfo.get("endDate");
-        String fileType = reportInfo.get("reportType");
+//        Map<String,String> reportInfo = (Map<String, String>) reqObject.get("reportInfo");
+        String reportName = (String) reqObject.get("reportName");
+        String reportDescription = (String) reqObject.get("reportDescription");
+        String startDate = (String) reqObject.get("startDate");
+        String endDate = (String) reqObject.get("endDate");
+        String fileType = (String) reqObject.get("reportType");
 
         Map<String,Integer> map = new HashMap<>();
         int result = 0;

@@ -234,10 +234,10 @@ public class StudentController {
         float totalGrade = attendGrade+practiceGrade+expGrade;
 
         Map<String,Float> map = new HashMap<>();
-        map.put("attendScore",attendGrade);
-        map.put("practiceScore",practiceGrade);
-        map.put("expScore",expGrade);
-        map.put("totalScore",totalGrade);
+        map.put("attendScore",(float)Math.round(attendGrade*100)/100);
+        map.put("practiceScore",(float)Math.round(practiceGrade*100)/100);
+        map.put("expScore",(float)Math.round(expGrade*100)/100);
+        map.put("totalScore",(float)Math.round(totalGrade*100)/100);
 
         return ApiResultHandler.buildApiResult(200,"",map);
     }
