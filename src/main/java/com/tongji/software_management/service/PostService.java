@@ -23,6 +23,7 @@ public class PostService {
     StudentRepository studentRepository;
 
     public int createPost(Post post){
+        post.setDate(null);
         return postRepository.saveAndFlush(post).getId();
     }
 

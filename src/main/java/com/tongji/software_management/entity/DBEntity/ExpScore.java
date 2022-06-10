@@ -3,6 +3,8 @@ package com.tongji.software_management.entity.DBEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -10,6 +12,8 @@ import java.util.Objects;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicInsert
+@DynamicUpdate
 @Entity
 @Table(name = "exp_score", schema = "education", catalog = "")
 @IdClass(ExpScorePK.class)

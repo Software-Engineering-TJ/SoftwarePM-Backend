@@ -14,6 +14,7 @@ import java.util.List;
 public interface ExpScoreRepository extends JpaRepository<ExpScore, ExpScorePK> {
     ExpScore findExpScoreByCourseIdAndClassIdAndExpnameAndStudentNumber(String courseID, String classID, String expname, String studentNumber);
     List<ExpScore> findExpScoresByCourseIdAndExpnameAndClassId(String courseID, String expname, String classID);
+    @Transactional
     int deleteExpScoreByFileUrl(String fileUrl);
 
     @Query("select es from ExpScore es where (es.courseId = ?1 and es.classId = ?2 and es.expname = ?3) order by es.score DESC")

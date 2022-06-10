@@ -42,10 +42,13 @@ public class FileController {
     @Autowired
     private InstructorService instructorService;
 
+    private static final String EXP_REPORT_FOLDER = "software_management/exp_report/";
+
+    private static final String EXP_REF_FOLDER = "software_management/exp_ref/";
     /**
      * 文件上传oss（老师和学生均用此接口）
      */
-    @PostMapping("upload")
+    @PostMapping
     public ApiResult uploadFile(@RequestParam("courseID")String courseID,
                                 @RequestParam("classID")String classID,
                                 @RequestParam(value = "expname",required = false)String expname,
@@ -59,7 +62,7 @@ public class FileController {
         //将文件写入oss
         if(expname == null){
             //本次是老师上传参考资料
-            String filePath = courseID + "/" + classID + "/" + userNumber + "/" + filename;
+            String filePath = EXP_REF_FOLDER+courseID + "/" + classID + "/" + userNumber + "/" + filename;
             String fileUrl = OSSUtils.uploadFile(filePath, file);
             //记录老师提交的资料信息：考虑重复提交同名文件（不用再次纪录）和提交新文件（插入一条记录）
             if(!instructorService.checkReference(fileUrl)){
@@ -67,7 +70,7 @@ public class FileController {
             }
         }else{
             //本次是学生上传实验报告
-            String filePath = courseID + "/" + classID + "/" + expname + "/" + userNumber + "/" + filename;
+            String filePath = EXP_REPORT_FOLDER+courseID + "/" + classID + "/" + expname + "/" + userNumber + "/" + filename;
             String fileUrl = OSSUtils.uploadFile(filePath, file);
             //将实验提交记录更新到数据库
             studentService.recordCommit(courseID,classID,expname,userNumber,fileUrl);
@@ -80,7 +83,7 @@ public class FileController {
     /**
      * 下载oss文件
      */
-    @GetMapping("download")
+    @GetMapping
     public void downloadFile(HttpServletResponse resp,
                              @RequestParam("fileUrl")String fileUrl)throws Exception{
         System.out.println("开始下载oss文件");
@@ -117,10 +120,11 @@ public class FileController {
     /**
      * 删除文件
      */
+    @DeleteMapping
     public ApiResult deleteFile(@RequestParam("fileUrl")String fileUrl){
         //删除OSS中的文件
         OSSUtils.deleteFile(fileUrl);
-        //删除文件在数据库中的记录,为了方便可以直接在expscore和reference两张表都执行删除操作
+        //删除文件在数据库中的记录,为了方便,可以直接在expscore和reference两张表都执行删除操作
         instructorService.deleteReference(fileUrl);
         studentService.deleteCommit(fileUrl);
         return ApiResultHandler.success(null);
