@@ -11,6 +11,7 @@ import com.tongji.software_management.service.InstructorService;
 import com.tongji.software_management.service.PracticeService;
 import com.tongji.software_management.utils.ApiResultHandler;
 import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -442,6 +443,7 @@ public class InstructorController {
     public ApiResult viewPractice(@RequestBody JSONObject reqObject) {
         String courseID = (String) reqObject.get("courseID");
         String classID = (String) reqObject.get("classID");
+        String studentNumber = (String) reqObject.get("studentNumber");
 
         List<Practice> practiceList = instructorService.getPracticeListOfSection(courseID,classID);
 
@@ -465,6 +467,10 @@ public class InstructorController {
                 }else{
                     map.put("status","尚未开始");
                 }
+                // 搜索成绩
+                double individualScore = practiceService.getStudentPracticeScore(practice,studentNumber);
+                map.put("practiceScore",individualScore);
+
                 practiceInfoList.add(map);
             }
         }

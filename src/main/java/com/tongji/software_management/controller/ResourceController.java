@@ -23,7 +23,7 @@ public class ResourceController {
     @Autowired
     ResourceService resourceService;
 
-    private static final String RESOURCE_PATH = "softwareManagement/resource/";
+    private static final String RESOURCE_PATH = "software_management/resource/";
 
     // 分页查询班级资源
     @GetMapping("{pageNumber}/{pageSize}")

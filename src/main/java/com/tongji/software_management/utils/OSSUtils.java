@@ -47,7 +47,7 @@ public class OSSUtils {
             InputStream fileInputStream = fileItem.getInputStream();
             //设置上传文件的元数据
             ObjectMetadata meta = new ObjectMetadata();
-            meta.setContentType(getFileType(fileItem.getName()));
+            meta.setContentType(getFileType(fileItem.getOriginalFilename()));
             //设置文件内容的编码
             meta.setContentEncoding("utf-8");
             //提交上传请求
