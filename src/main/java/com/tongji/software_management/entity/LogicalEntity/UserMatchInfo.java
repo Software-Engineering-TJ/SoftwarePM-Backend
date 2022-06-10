@@ -16,7 +16,7 @@ public class UserMatchInfo implements Comparable<UserMatchInfo>{
     @Override
     public int compareTo(UserMatchInfo o){
         Integer x = this.score.compareTo(o.getScore());
-        if (x!=0){
+        if (x==0){
             return o.time.compareTo(this.time);
         }
         return x;
