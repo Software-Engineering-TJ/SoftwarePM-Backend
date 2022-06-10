@@ -454,6 +454,7 @@ public class InstructorController {
                 map.put("practiceName",practice.getPracticeName());
                 map.put("startTime",df.format(practice.getStartTime()));
                 map.put("endTime",df.format(practice.getEndTime()));
+                map.put("practiceId",practice.getPracticeId());
                 //当前时间
                 Timestamp now = new Timestamp(System.currentTimeMillis());
                 if(now.before(practice.getEndTime())){
