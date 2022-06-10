@@ -38,10 +38,10 @@ public class PostService {
         Pageable pageable = PageRequest.of(pageNumber-1,pageSize,sort);
         // -1：查找全部
         if(type == -1){
-            return postRepository.findByCourseIdAndClassIdAndType(courseId,classId,type, pageable).getContent();
+            return postRepository.findByCourseIdAndClassId(courseId,classId,pageable).getContent();
         }
         else{
-            return postRepository.findByCourseIdAndClassId(courseId,classId,pageable).getContent();
+            return postRepository.findByCourseIdAndClassIdAndType(courseId,classId,type, pageable).getContent();
         }
     }
 
