@@ -40,7 +40,7 @@ public class ChatWebsocket {
     private Session session;
 
     private String userId; //对应student表中的student_number
-    private String contestId; //对应practice表中的practice_id
+    private int contestId; //对应practice表中的practice_id
     static MatchCacheUtil matchCacheUtil;
     static Lock lock = new ReentrantLock();
     static Condition matchCond = lock.newCondition();
@@ -163,7 +163,7 @@ public class ChatWebsocket {
     private void addUser(JSONObject jsonObject) {
 
         log.info("ChatWebsocket addUser 用户加入游戏开始 message: {}, userId: {}", jsonObject.toJSONString(), userId);
-        String cid = jsonObject.get("contestId").toString();
+        int cid = jsonObject.getInteger("contestId");
         contestId = cid;
         MessageReply<Object> messageReply = new MessageReply<>();
         ChatMessage<Object> result = new ChatMessage<>();
@@ -185,7 +185,7 @@ public class ChatWebsocket {
                 messageReply.setCode(MessageCode.SUCCESS.getCode());
                 messageReply.setDesc(MessageCode.SUCCESS.getDesc());
                 matchCacheUtil.setUserIDLE(userId);
-                matchCacheUtil.setUserContestInfo(userId,cid);
+                matchCacheUtil.setUserContestInfo(userId,String.valueOf(cid));
 
             } else {
                 messageReply.setCode(MessageCode.USER_IS_ONLINE.getCode());
@@ -195,7 +195,7 @@ public class ChatWebsocket {
             messageReply.setCode(MessageCode.SUCCESS.getCode());
             messageReply.setDesc(MessageCode.SUCCESS.getDesc());
             matchCacheUtil.setUserIDLE(userId);
-            matchCacheUtil.setUserContestInfo(userId,cid);
+            matchCacheUtil.setUserContestInfo(userId,String.valueOf(cid));
         }
 
         Set<String> receivers = new HashSet<>();
@@ -216,7 +216,7 @@ public class ChatWebsocket {
     private void matchUser(JSONObject jsonObject) {
 
         log.info("ChatWebsocket matchUser 用户随机匹配对手开始 message: {}, userId: {}", jsonObject.toJSONString(), userId);
-        String cid = jsonObject.get("contestId").toString();
+        int cid = jsonObject.getInteger("contestId");
         MessageReply<GameMatchInfo> messageReply = new MessageReply<>();
         ChatMessage<GameMatchInfo> result = new ChatMessage<>();
         result.setSender(userId);
@@ -262,8 +262,8 @@ public class ChatWebsocket {
                         sendMessageAll(messageReply);
                         return;
                     }
-                    receiver = matchCacheUtil.getUserInMatchRandom(userId,cid);
-                    receiver2 = matchCacheUtil.getUserInMatchRandom(userId,cid,receiver);
+                    receiver = matchCacheUtil.getUserInMatchRandom(userId,String.valueOf(cid));
+                    receiver2 = matchCacheUtil.getUserInMatchRandom(userId,String.valueOf(cid),receiver);
                     if (receiver != null&&receiver2!=null) {
                         // 对手不处于待匹配状态
                         if (matchCacheUtil.getUserOnlineStatus(receiver).compareTo(StatusEnum.IN_MATCH) != 0) {
@@ -447,7 +447,7 @@ public class ChatWebsocket {
         Integer newScore = jsonObject.getInteger("data");
         UserMatchInfo userMatchInfo = new UserMatchInfo();
         userMatchInfo.setUserId(userId);
-        userMatchInfo.setContestId(contestId);
+        userMatchInfo.setContestId(String.valueOf(contestId));
         userMatchInfo.setScore(newScore);
         userMatchInfo.setTime(finishTime);
         matchCacheUtil.setUserMatchInfo(userId, JSON.toJSONString(userMatchInfo));
@@ -515,7 +515,7 @@ public class ChatWebsocket {
                 //保存得分
                 for(UserMatchInfo u : userMatchInfos) {
                     PracticeScore practiceScore = new PracticeScore();
-                    String pid = u.getContestId();
+                    int pid = Integer.parseInt(u.getContestId());
                     Practice practice = practiceService.get(pid);
                     practiceScore.setStudentNumber(u.getUserId());
                     practiceScore.setPracticeName(practice.getPracticeName());

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PracticeRepository extends JpaRepository<Practice, String> {
+public interface PracticeRepository extends JpaRepository<Practice, Integer> {
     List<Practice> findPracticesByCourseIdAndClassId(String courseID, String classID);
-    Practice findByPracticeId(String practiceId);
+    Practice findByPracticeId(int practiceId);
 
 }

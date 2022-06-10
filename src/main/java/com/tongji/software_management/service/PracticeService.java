@@ -11,7 +11,7 @@ public class PracticeService {
     @Resource
     private PracticeRepository practiceRepository;
 
-    public Practice get(String practiceId) {
+    public Practice get(int practiceId) {
         return practiceRepository.findByPracticeId(practiceId);
     }
 
